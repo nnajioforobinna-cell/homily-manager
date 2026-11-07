@@ -12,11 +12,14 @@ Then open http://127.0.0.1:5050 in your browser.
 
 import os
 import re
+import io
 import html
 import sqlite3
 import datetime
+import tempfile
 from flask import (
-    Flask, g, render_template, request, redirect, url_for, flash, abort
+    Flask, g, render_template, request, redirect, url_for, flash, abort,
+    send_file
 )
 from markupsafe import Markup
 import lectionary
@@ -25,6 +28,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCHEMA_PATH = os.path.join(BASE_DIR, "database", "schema.sql")
 DEFAULT_DB = os.path.join(BASE_DIR, "database", "homilies.db")
 DB_PATH = os.environ.get("HOMILY_DB", DEFAULT_DB)
+BACKUP_DIR = os.path.join(BASE_DIR, "backups")
 # Port 5000 is taken by macOS (AirPlay Receiver / Control Center) on recent
 # versions, so the app uses 5050 by default. Override with HOMILY_PORT.
 PORT = int(os.environ.get("HOMILY_PORT", "5050"))
@@ -531,6 +535,88 @@ def funerals():
 # --------------------------------------------------------------------------
 # Import existing homilies (specification section 10)
 # --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# Backing up your homilies. Git keeps the app's code safe; this keeps the one
+# file that holds your homilies (database/homilies.db) safe.
+# --------------------------------------------------------------------------
+def _make_backup(dest_path):
+    """Write a consistent snapshot of the database to dest_path using SQLite's
+    online-backup API (safe to run while the app is in use)."""
+    src = sqlite3.connect(DB_PATH)
+    dst = sqlite3.connect(dest_path)
+    try:
+        with dst:
+            src.backup(dst)
+    finally:
+        dst.close()
+        src.close()
+
+
+def _backup_stamp():
+    return datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+
+def _list_backups():
+    if not os.path.isdir(BACKUP_DIR):
+        return []
+    out = []
+    for name in sorted(os.listdir(BACKUP_DIR), reverse=True):
+        if name.endswith(".db"):
+            p = os.path.join(BACKUP_DIR, name)
+            st = os.stat(p)
+            out.append({
+                "name": name,
+                "size_kb": round(st.st_size / 1024),
+                "when": datetime.datetime.fromtimestamp(
+                    st.st_mtime).strftime("%d %b %Y, %H:%M"),
+            })
+    return out
+
+
+@app.route("/backup")
+def backup():
+    db = get_db()
+    counts = {
+        "homilies": db.execute("SELECT COUNT(*) FROM homilies").fetchone()[0],
+        "funerals": db.execute(
+            "SELECT COUNT(*) FROM homilies WHERE type='funeral'").fetchone()[0],
+        "stories": db.execute("SELECT COUNT(*) FROM illustrations").fetchone()[0],
+    }
+    size_kb = round(os.path.getsize(DB_PATH) / 1024) if os.path.exists(DB_PATH) else 0
+    return render_template("backup.html", counts=counts, size_kb=size_kb,
+                           backups=_list_backups())
+
+
+@app.route("/backup/download")
+def backup_download():
+    """Send a fresh snapshot to the browser so you can save it anywhere —
+    an external drive, or an iCloud/Dropbox folder for off-machine safety."""
+    tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+    tmp.close()
+    try:
+        _make_backup(tmp.name)
+        with open(tmp.name, "rb") as f:
+            data = f.read()
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+    return send_file(
+        io.BytesIO(data), as_attachment=True,
+        download_name=f"homilies-{_backup_stamp()}.db",
+        mimetype="application/x-sqlite3")
+
+
+@app.route("/backup/save", methods=["POST"])
+def backup_save():
+    os.makedirs(BACKUP_DIR, exist_ok=True)
+    dest = os.path.join(BACKUP_DIR, f"homilies-{_backup_stamp()}.db")
+    _make_backup(dest)
+    flash(f"Backup saved: {os.path.basename(dest)}")
+    return redirect(url_for("backup"))
+
+
 @app.route("/celebrations")
 def celebrations():
     db = get_db()

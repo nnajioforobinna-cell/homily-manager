@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Backup - Homily Manager{% endblock %}
+{% block content %}
+<h1>Back up your homilies</h1>
+<p class="section-note">Your homilies, funerals, weddings, planner, and stories
+all live in one file on this mac. Keep a copy somewhere safe, so nothing is ever
+lost. (This is separate from the app's code, which is kept on GitHub.)</p>
+
+<div class="stat-cards">
+  <div class="stat"><span class="n">{{ counts.homilies }}</span> homilies</div>
+  <div class="stat"><span class="n">{{ counts.funerals }}</span> funerals</div>
+  <div class="stat"><span class="n">{{ counts.stories }}</span> stories</div>
+  <div class="stat"><span class="n">{{ size_kb }}</span> KB on disk</div>
+</div>
+
+<div class="backup-actions">
+  <a class="btn" href="{{ url_for('backup_download') }}">Download a backup</a>
+  <span class="muted-note">Save it to an external drive, or an iCloud/Dropbox
+    folder, for a copy that is safe even if something happens to this mac.</span>
+</div>
+
+<form method="post" action="{{ url_for('backup_save') }}" class="backup-save">
+  <button type="submit">Save a backup on this mac</button>
+  <span class="muted-note">Keeps a dated copy in the app's <code>backups</code> folder.</span>
+</form>
+
+{% if backups %}
+<h3>Backups saved on this mac</h3>
+<ul class="told-list">
+  {% for b in backups %}
+  <li><strong>{{ b.name }}</strong> · {{ b.when }} · {{ b.size_kb }} KB</li>
+  {% endfor %}
+</ul>
+<p class="muted-note">To go back to one of these, close the app and replace
+  <code>database/homilies.db</code> with the backup file.</p>
+{% else %}
+<p class="empty">No local backups yet.</p>
+{% endif %}
+{% endblock %}

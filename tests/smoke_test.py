@@ -189,6 +189,13 @@ check("baptism button present", b"New baptism" in r.data)
 r = client.get("/funerals")
 check("wedding not in funerals", b"Anna &amp; Ben" not in r.data)
 
+# --- Backup -------------------------------------------------------------
+r = client.get("/backup")
+check("backup page loads", r.status_code == 200 and b"Back up your homilies" in r.data)
+r = client.get("/backup/download")
+check("backup download returns a sqlite file",
+      r.status_code == 200 and r.data[:15] == b"SQLite format 3")
+
 # The lectionary computes a known date correctly
 import lectionary  # noqa: E402
 import datetime as _d  # noqa: E402

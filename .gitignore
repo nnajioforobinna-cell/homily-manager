@@ -3,4 +3,5 @@
 __pycache__/
 *.db
 database/homilies.db
+backups/
 .DS_Store
