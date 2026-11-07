@@ -116,8 +116,11 @@ like an app.
 
 - **New homily files to import:** upload them, or import on your mac and upload a
   fresh database backup (step 0 → step 4), then **Reload** on the Web tab.
-- **App improvements (from here):** in the Bash console,
-  `cd homily-manager && git pull`, then **Reload**.
+- **App improvements (from here):** in the Bash console run
+  `cd ~/homily-manager && git pull` (the `~/` means "from your home folder", so
+  it works even if you are already inside the folder), then **Reload** on the Web
+  tab. If `cd` ever says *"No such file or directory"*, you are already in the
+  folder — just run `git pull` on its own.
 - **Back up the online database** now and then from the app's **Backup** page, the
   same as on your mac.
 
