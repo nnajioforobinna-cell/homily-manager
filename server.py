@@ -730,10 +730,10 @@ def import_page():
         try:
             import extract_readings
             import extract_stories
-            import build_lectionary
+            import load_official_lectionary
             extract_readings.backfill_readings(db_path=DB_PATH)
             extract_stories.aggregate(db_path=DB_PATH)
-            build_lectionary.build_from_homilies(db_path=DB_PATH)
+            load_official_lectionary.load_official(db_path=DB_PATH)
         except Exception:
             pass
         flash("Import finished. Readings, stories, and the lectionary were refreshed.")

@@ -1,0 +1,1523 @@
+[
+{
+"signature": "advent1",
+"cycle_year": "A",
+"liturgical_day": "1st Sunday of Advent",
+"first_reading": "Isaiah 2:1-5",
+"psalm": "Psalm 122:1-2, 3-4a, 4b-5, 6-7, 8-9",
+"second_reading": "Romans 13:11-14",
+"gospel": "Matthew 24:37-44"
+},
+{
+"signature": "advent2",
+"cycle_year": "A",
+"liturgical_day": "2nd Sunday of Advent",
+"first_reading": "Isaiah 11:1-10",
+"psalm": "Psalm 72:1-2, 7-8, 12-13, 17",
+"second_reading": "Romans 15:4-9",
+"gospel": "Matthew 3:1-12"
+},
+{
+"signature": "advent3",
+"cycle_year": "A",
+"liturgical_day": "3rd Sunday of Advent",
+"first_reading": "Isaiah 35:1-6a, 10",
+"psalm": "Psalm 146:6c-7, 8-9a, 9b-10",
+"second_reading": "James 5:7-10",
+"gospel": "Matthew 11:2-11"
+},
+{
+"signature": "advent4",
+"cycle_year": "A",
+"liturgical_day": "4th Sunday of Advent",
+"first_reading": "Isaiah 7:10-14",
+"psalm": "Psalm 24:1-2, 3-4, 5-6",
+"second_reading": "Romans 1:1-7",
+"gospel": "Matthew 1:18-24"
+},
+{
+"signature": "ascension",
+"cycle_year": "A",
+"liturgical_day": "Ascension of the Lord – C (new)",
+"first_reading": "Acts 1:1-11",
+"psalm": "Psalm 47:2-3, 6-7, 8-9",
+"second_reading": "opt: Heb 9:24-28; 10:19-23",
+"gospel": "Luke 24:46-53"
+},
+{
+"signature": "baptism",
+"cycle_year": "A",
+"liturgical_day": "The Baptism of the Lord - C (optional; new)",
+"first_reading": "opt: Isa 40:1-5, 9-11",
+"psalm": "opt: Ps 104:1b-2, 3-4, 24-25, 27-28, 29b-30",
+"second_reading": "opt: Titus 2:11-14; 3:4-7",
+"gospel": "Luke 3:15-16, 21-22"
+},
+{
+"signature": "christ_king",
+"cycle_year": "A",
+"liturgical_day": "34th or Last Sunday in Ordinary Time - A: Solemnity of Our Lord Jesus Christ the King",
+"first_reading": "Ezekiel 34:11-12, 15-17",
+"psalm": "Psalm 23:1-2a, 2b-3, 5, 6",
+"second_reading": "1 Corinthians 15:20-26, 28",
+"gospel": "Matthew 25:31-46"
+},
+{
+"signature": "christmas",
+"cycle_year": "A",
+"liturgical_day": "Christmas: Mass during the Day - ABC",
+"first_reading": "Isaiah 52:7-10",
+"psalm": "Psalm 98:1, 2-3a, 3b-4, 5-6",
+"second_reading": "Hebrews 1:1-6",
+"gospel": "John 1:1-18"
+},
+{
+"signature": "easter2",
+"cycle_year": "A",
+"liturgical_day": "2nd Sunday of Easter – A (Sunday of Divine Mercy)",
+"first_reading": "Acts 2:42-47",
+"psalm": "Psalm 118:2-4, 13-15, 22-24",
+"second_reading": "1 Peter 1:3-9",
+"gospel": "John 20:19-31"
+},
+{
+"signature": "easter3",
+"cycle_year": "A",
+"liturgical_day": "3rd Sunday of Easter",
+"first_reading": "Acts 2:14, 22-33",
+"psalm": "Psalm 16:1-2a+5, 7-8, 9-10, 11",
+"second_reading": "1 Peter 1:17-21",
+"gospel": "Luke 24:13-35"
+},
+{
+"signature": "easter4",
+"cycle_year": "A",
+"liturgical_day": "4th Sunday of Easter",
+"first_reading": "Acts 2:14a, 36-41",
+"psalm": "Psalm 23:1-3a, 3b-4, 5, 6",
+"second_reading": "1 Peter 2:20b-25",
+"gospel": "John 10:1-10"
+},
+{
+"signature": "easter5",
+"cycle_year": "A",
+"liturgical_day": "5th Sunday of Easter",
+"first_reading": "Acts 6:1-7",
+"psalm": "Psalm 33:1-2, 4-5, 18-19",
+"second_reading": "1 Peter 2:4-9",
+"gospel": "John 14:1-12"
+},
+{
+"signature": "easter6",
+"cycle_year": "A",
+"liturgical_day": "6th Sunday of Easter",
+"first_reading": "Acts 8:5-8, 14-17",
+"psalm": "Psalm 66:1-3, 4-5, 6-7, 16+20",
+"second_reading": "1 Peter 3:15-18",
+"gospel": "John 14:15-21"
+},
+{
+"signature": "easter7",
+"cycle_year": "A",
+"liturgical_day": "7th Sunday of Easter – C (note)",
+"first_reading": "Acts 7:55-60",
+"psalm": "Psalm 97:1-2, 6-7, 9",
+"second_reading": "Revelation 22:12-14, 16-17, 20",
+"gospel": "John 17:20-26"
+},
+{
+"signature": "easter_day",
+"cycle_year": "A",
+"liturgical_day": "Easter Sunday: Resurrection of the Lord; Mass of Easter Day – ABC",
+"first_reading": "Acts 10:34a, 37-43",
+"psalm": "Psalm 118:1-2, 16-17, 22-23",
+"second_reading": "Colossians 3:1-4",
+"gospel": "John 20:1-9"
+},
+{
+"signature": "epiphany",
+"cycle_year": "A",
+"liturgical_day": "The Epiphany of the Lord (Solemnity) - ABC [Traditionally celebrated on Jan. 6; in the USA now on the Sunday after Jan. 1]",
+"first_reading": "Isaiah 60:1-6",
+"psalm": "Psalm 72:1-2, 7-8, 10-11, 12-13",
+"second_reading": "Ephesians 3:2-3a, 5-6",
+"gospel": "Matthew 2:1-12"
+},
+{
+"signature": "holy_family",
+"cycle_year": "A",
+"liturgical_day": "The Holy Family - C (optional; new)",
+"first_reading": "opt: 1 Sam 1:20-22, 24-28",
+"psalm": "opt: Ps 84:2-3, 5-6, 9-10",
+"second_reading": "opt: 1 John 3:1-2, 21-24",
+"gospel": "Luke 2:41-52"
+},
+{
+"signature": "lent1",
+"cycle_year": "A",
+"liturgical_day": "1st Sunday of Lent",
+"first_reading": "Genesis 2:7-9; 3:1-7",
+"psalm": "Psalm 51:3-4, 5-6, 12-13, 14+17",
+"second_reading": "Romans 5:12-19",
+"gospel": "Matthew 4:1-11"
+},
+{
+"signature": "lent2",
+"cycle_year": "A",
+"liturgical_day": "2nd Sunday of Lent",
+"first_reading": "Genesis 12:1-4a",
+"psalm": "Psalm 33:4-5, 18-19, 20+22",
+"second_reading": "2 Timothy 1:8b-10",
+"gospel": "Matthew 17:1-9"
+},
+{
+"signature": "lent3",
+"cycle_year": "A",
+"liturgical_day": "3rd Sunday of Lent",
+"first_reading": "Exodus 17:3-7",
+"psalm": "Psalm 95:1-2, 6-7b, 7c-9",
+"second_reading": "Romans 5:1-2, 5-8",
+"gospel": "John 4:5-42"
+},
+{
+"signature": "lent4",
+"cycle_year": "A",
+"liturgical_day": "4th Sunday of Lent",
+"first_reading": "1 Samuel 16:1b, 6-7, 10-13a",
+"psalm": "Psalm 23:1-3a, 3b-4, 5, 6",
+"second_reading": "Ephesians 5:8-14",
+"gospel": "John 9:1-41"
+},
+{
+"signature": "lent5",
+"cycle_year": "A",
+"liturgical_day": "5th Sunday of Lent",
+"first_reading": "Ezekiel 37:12-14",
+"psalm": "Psalm 130:1-2, 3-4, 5-6, 7-8",
+"second_reading": "Romans 8:8-11",
+"gospel": "John 11:1-45"
+},
+{
+"signature": "mary_mother",
+"cycle_year": "A",
+"liturgical_day": "Jan. 1: The Octave Day of Christmas: Solemnity of the Blessed Virgin Mary, the Mother of God - ABC",
+"first_reading": "Numbers 6:22-27",
+"psalm": "Psalm 67:2-3, 5, 6+8",
+"second_reading": "Galatians 4:4-7",
+"gospel": "Luke 2:16-21"
+},
+{
+"signature": "ot10",
+"cycle_year": "A",
+"liturgical_day": "10th Sunday in Ordinary Time - A [2026: Body & Blood of Christ]",
+"first_reading": "Hosea 6:3-6",
+"psalm": "Psalm 50:1+8, 12-13, 14-15",
+"second_reading": "Romans 4:18-25",
+"gospel": "Matthew 9:9-13"
+},
+{
+"signature": "ot11",
+"cycle_year": "A",
+"liturgical_day": "11th Sunday in Ordinary Time - A",
+"first_reading": "Exodus 19:2-6a",
+"psalm": "Psalm 100:1-2, 3, 5",
+"second_reading": "Romans 5:6-11",
+"gospel": "Matthew 9:36—10:8"
+},
+{
+"signature": "ot12",
+"cycle_year": "A",
+"liturgical_day": "12th Sunday in Ordinary Time - A",
+"first_reading": "Jeremiah 20:10-13",
+"psalm": "Psalm 69:8-10, 14+17, 33-35",
+"second_reading": "Romans 5:12-15",
+"gospel": "Matthew 10:26-33"
+},
+{
+"signature": "ot13",
+"cycle_year": "A",
+"liturgical_day": "13th Sunday in Ordinary Time - A",
+"first_reading": "2 Kings 4:8-11, 14-16a",
+"psalm": "Psalm 89:2-3, 16-17, 18-19",
+"second_reading": "Romans 6:3-4, 8-11",
+"gospel": "Matthew 10:37-42"
+},
+{
+"signature": "ot14",
+"cycle_year": "A",
+"liturgical_day": "14th Sunday in Ordinary Time - A",
+"first_reading": "Zechariah 9:9-10",
+"psalm": "Psalm 145:1-2, 8-9, 10-11, 13-14",
+"second_reading": "Romans 8:9, 11-13",
+"gospel": "Matthew 11:25-30"
+},
+{
+"signature": "ot15",
+"cycle_year": "A",
+"liturgical_day": "15th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 55:10-11",
+"psalm": "Psalm 65:10, 11, 12-13, 14",
+"second_reading": "Romans 8:18-23",
+"gospel": "Matthew 13:1-23"
+},
+{
+"signature": "ot16",
+"cycle_year": "A",
+"liturgical_day": "16th Sunday in Ordinary Time - A",
+"first_reading": "Wisdom 12:13, 16-19",
+"psalm": "Psalm 86:5-6, 9-10, 15-16",
+"second_reading": "Romans 8:26-27",
+"gospel": "Matthew 13:24-43"
+},
+{
+"signature": "ot17",
+"cycle_year": "A",
+"liturgical_day": "17th Sunday in Ordinary Time - A",
+"first_reading": "1 Kings 3:5, 7-12",
+"psalm": "Psalm 119:57+72, 76-77, 127-128, 129-130",
+"second_reading": "Romans 8:28-30",
+"gospel": "Matthew 13:44-52"
+},
+{
+"signature": "ot18",
+"cycle_year": "A",
+"liturgical_day": "18th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 55:1-3",
+"psalm": "Psalm 145:8-9, 15-16, 17-18",
+"second_reading": "Romans 8:35, 37-39",
+"gospel": "Matthew 14:13-21"
+},
+{
+"signature": "ot19",
+"cycle_year": "A",
+"liturgical_day": "19th Sunday in Ordinary Time - A",
+"first_reading": "1 Kings 19:9a, 11-13a",
+"psalm": "Psalm 85:9ab+10, 11-12, 13-14",
+"second_reading": "Romans 9:1-5",
+"gospel": "Matthew 14:22-33"
+},
+{
+"signature": "ot2",
+"cycle_year": "A",
+"liturgical_day": "2nd Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 49:3, 5-6",
+"psalm": "Psalm 40:2+4, 7-8a, 8b-9, 10",
+"second_reading": "1 Corinthians 1:1-3",
+"gospel": "John 1:29-34"
+},
+{
+"signature": "ot20",
+"cycle_year": "A",
+"liturgical_day": "20th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 56:1, 6-7",
+"psalm": "Psalm 67:2-3, 5, 6+8",
+"second_reading": "Romans 11:13-15, 29-32",
+"gospel": "Matthew 15:21-28"
+},
+{
+"signature": "ot21",
+"cycle_year": "A",
+"liturgical_day": "21st Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 22:19-23",
+"psalm": "Psalm 138:1-2a, 2b-3, 6+8",
+"second_reading": "Romans 11:33-36",
+"gospel": "Matthew 16:13-20"
+},
+{
+"signature": "ot22",
+"cycle_year": "A",
+"liturgical_day": "22nd Sunday in Ordinary Time - A",
+"first_reading": "Jeremiah 20:7-9",
+"psalm": "Psalm 63:2, 3-4, 5-6, 8-9",
+"second_reading": "Romans 12:1-2",
+"gospel": "Matthew 16:21-27"
+},
+{
+"signature": "ot23",
+"cycle_year": "A",
+"liturgical_day": "23rd Sunday in Ordinary Time - A",
+"first_reading": "Ezekiel 33:7-9",
+"psalm": "Psalm 95:1-2, 6-7b, 7c-9",
+"second_reading": "Romans 13:8-10",
+"gospel": "Matthew 18:15-20"
+},
+{
+"signature": "ot24",
+"cycle_year": "A",
+"liturgical_day": "24th Sunday in Ordinary Time - A",
+"first_reading": "Sirach 27:30—28:7",
+"psalm": "Psalm 103:1-2, 3-4, 9-10, 11-12",
+"second_reading": "Romans 14:7-9",
+"gospel": "Matthew 18:21-35"
+},
+{
+"signature": "ot25",
+"cycle_year": "A",
+"liturgical_day": "25th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 55:6-9",
+"psalm": "Psalm 145:2-3, 8-9, 17-18",
+"second_reading": "Philippians 1:20c-24, 27a",
+"gospel": "Matthew 20:1-16a"
+},
+{
+"signature": "ot26",
+"cycle_year": "A",
+"liturgical_day": "26th Sunday in Ordinary Time - A",
+"first_reading": "Ezekiel 18:25-28",
+"psalm": "Psalm 25:4-5, 6-7, 8-9",
+"second_reading": "Philippians 2:1-11",
+"gospel": "Matthew 21:28-32"
+},
+{
+"signature": "ot27",
+"cycle_year": "A",
+"liturgical_day": "27th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 5:1-7",
+"psalm": "Psalm 80:9+12, 13-14, 15-16, 19-20",
+"second_reading": "Philippians 4:6-9",
+"gospel": "Matthew 21:33-43"
+},
+{
+"signature": "ot28",
+"cycle_year": "A",
+"liturgical_day": "28th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 25:6-10a",
+"psalm": "Psalm 23:1-3a, 3b-4, 5, 6",
+"second_reading": "Philippians 4:12-14, 19-20",
+"gospel": "Matthew 22:1-14"
+},
+{
+"signature": "ot29",
+"cycle_year": "A",
+"liturgical_day": "29th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 45:1, 4-6",
+"psalm": "Psalm 96:1+3, 4-5, 7-8, 9-10",
+"second_reading": "1 Thessalonians 1:1-5b",
+"gospel": "Matthew 22:15-21"
+},
+{
+"signature": "ot3",
+"cycle_year": "A",
+"liturgical_day": "3rd Sunday in Ordinary Time - A: Sunday of the Word of God*",
+"first_reading": "Isaiah 8:23b—9:3",
+"psalm": "Psalm 27:1, 4, 13-14",
+"second_reading": "1 Corinthians 1:10-13, 17",
+"gospel": "Matthew 4:12-23"
+},
+{
+"signature": "ot30",
+"cycle_year": "A",
+"liturgical_day": "30th Sunday in Ordinary Time - A",
+"first_reading": "Exodus 22:20-26",
+"psalm": "Psalm 18:2-3a, 3b-4, 47+51",
+"second_reading": "1 Thessalonians 1:5c-10",
+"gospel": "Matthew 22:34-40"
+},
+{
+"signature": "ot31",
+"cycle_year": "A",
+"liturgical_day": "31st Sunday in Ordinary Time - A [2026: All Saints]",
+"first_reading": "Malachi 1:14b—2:2b, 8-10",
+"psalm": "Psalm 131:1, 2, 3",
+"second_reading": "1 Thessalonians 2:7b-9, 13",
+"gospel": "Matthew 23:1-12"
+},
+{
+"signature": "ot32",
+"cycle_year": "A",
+"liturgical_day": "32nd Sunday in Ordinary Time - A",
+"first_reading": "Wisdom 6:12-16",
+"psalm": "Psalm 63:2, 3-4, 5-6, 7-8",
+"second_reading": "1 Thessalonians 4:13-18",
+"gospel": "Matthew 25:1-13"
+},
+{
+"signature": "ot33",
+"cycle_year": "A",
+"liturgical_day": "33rd Sunday in Ordinary Time - A",
+"first_reading": "Proverbs 31:10-13, 19-20, 30-31",
+"psalm": "Psalm 128:1-2, 3, 4-5",
+"second_reading": "1 Thessalonians 5:1-6",
+"gospel": "Matthew 25:14-30"
+},
+{
+"signature": "ot4",
+"cycle_year": "A",
+"liturgical_day": "4th Sunday in Ordinary Time - A",
+"first_reading": "Zephaniah 2:3; 3:12-13",
+"psalm": "Psalm 146:6c-7, 8-9a, 9b-10",
+"second_reading": "1 Corinthians 1:26-31",
+"gospel": "Matthew 5:1-12a"
+},
+{
+"signature": "ot5",
+"cycle_year": "A",
+"liturgical_day": "5th Sunday in Ordinary Time - A",
+"first_reading": "Isaiah 58:7-10",
+"psalm": "Psalm 112:4-5, 6-7, 8-9",
+"second_reading": "1 Corinthians 2:1-5",
+"gospel": "Matthew 5:13-16"
+},
+{
+"signature": "ot6",
+"cycle_year": "A",
+"liturgical_day": "6th Sunday in Ordinary Time - A",
+"first_reading": "Sirach 15:15-20",
+"psalm": "Psalm 119:1-2, 4-5, 17-18, 33-34",
+"second_reading": "1 Corinthians 2:6-10",
+"gospel": "Matthew 5:17-37"
+},
+{
+"signature": "ot7",
+"cycle_year": "A",
+"liturgical_day": "7th Sunday in Ordinary Time - A [omitted in 2026]",
+"first_reading": "Leviticus 19:1-2, 17-18",
+"psalm": "Psalm 103:1-2, 3-4, 8+10, 12-13",
+"second_reading": "1 Corinthians 3:16-23",
+"gospel": "Matthew 5:38-48"
+},
+{
+"signature": "palm",
+"cycle_year": "A",
+"liturgical_day": "Good Friday of the Lord’s Passion – ABC",
+"first_reading": "Isaiah 52:13—53:12",
+"psalm": "Psalm 31:2+6, 12-13, 15-16, 17+25",
+"second_reading": "Hebrews 4:14-16; 5:7-9",
+"gospel": "John 18:1—19:42"
+},
+{
+"signature": "pentecost",
+"cycle_year": "A",
+"liturgical_day": "Friday after the Second Sunday after Pentecost: Solemnity of the Most Sacred Heart of Jesus",
+"first_reading": "Deuteronomy 7:6-11",
+"psalm": "Psalm 103:1-2, 3-4, [6-7,] 8+10",
+"second_reading": "1 John 4:7-16",
+"gospel": "Matthew 11:25-30"
+},
+{
+"signature": "trinity",
+"cycle_year": "A",
+"liturgical_day": "Sunday after Trinity Sunday: Solemnity of the Most Holy Body and Blood of Christ (formerly called “Corpus Christi”)",
+"first_reading": "Deuteronomy 8:2-3, 14b-16a",
+"psalm": "Psalm 147:12-13, 14-15, 19-20",
+"second_reading": "1 Corinthians 10:16-17",
+"gospel": "John 6:51-58"
+},
+{
+"signature": "advent1",
+"cycle_year": "B",
+"liturgical_day": "1st Sunday of Advent",
+"first_reading": "Isaiah 63:16b-17, 19b; 64:2-7",
+"psalm": "Psalm 80:2-3, 15-16, 18-19",
+"second_reading": "1 Corinthians 1:3-9",
+"gospel": "Mark 13:33-37"
+},
+{
+"signature": "advent2",
+"cycle_year": "B",
+"liturgical_day": "2nd Sunday of Advent",
+"first_reading": "Isaiah 40:1-5, 9-11",
+"psalm": "Psalm 85:9ab+10, 11-12, 13-14",
+"second_reading": "2 Peter 3:8-14",
+"gospel": "Mark 1:1-8"
+},
+{
+"signature": "advent3",
+"cycle_year": "B",
+"liturgical_day": "3rd Sunday of Advent",
+"first_reading": "Isaiah 61:1-2a, 10-11",
+"psalm": "Luke 1:46-48, 49-50, 53-54",
+"second_reading": "1 Thessalonians 5:16-24",
+"gospel": "John 1:6-8, 19-28"
+},
+{
+"signature": "advent4",
+"cycle_year": "B",
+"liturgical_day": "4th Sunday of Advent",
+"first_reading": "2 Samuel 7:1-5, 8b-12, 14a, 16",
+"psalm": "Psalm 89:2-3, 4-5, 27+29",
+"second_reading": "Romans 16:25-27",
+"gospel": "Luke 1:26-38"
+},
+{
+"signature": "ascension",
+"cycle_year": "B",
+"liturgical_day": "Ascension of the Lord – C (new)",
+"first_reading": "Acts 1:1-11",
+"psalm": "Psalm 47:2-3, 6-7, 8-9",
+"second_reading": "opt: Heb 9:24-28; 10:19-23",
+"gospel": "Luke 24:46-53"
+},
+{
+"signature": "baptism",
+"cycle_year": "B",
+"liturgical_day": "The Baptism of the Lord - C (optional; new)",
+"first_reading": "opt: Isa 40:1-5, 9-11",
+"psalm": "opt: Ps 104:1b-2, 3-4, 24-25, 27-28, 29b-30",
+"second_reading": "opt: Titus 2:11-14; 3:4-7",
+"gospel": "Luke 3:15-16, 21-22"
+},
+{
+"signature": "christ_king",
+"cycle_year": "B",
+"liturgical_day": "34th or Last Sunday in Ord. Time - B: Solemnity of Christ the King",
+"first_reading": "Daniel 7:13-14",
+"psalm": "Psalm 93:1a, 1b-2, 5",
+"second_reading": "Revelation 1:5-8",
+"gospel": "John 18:33b-37"
+},
+{
+"signature": "christmas",
+"cycle_year": "B",
+"liturgical_day": "Christmas: Mass during the Day - ABC",
+"first_reading": "Isaiah 52:7-10",
+"psalm": "Psalm 98:1, 2-3a, 3b-4, 5-6",
+"second_reading": "Hebrews 1:1-6",
+"gospel": "John 1:1-18"
+},
+{
+"signature": "corpus_christi",
+"cycle_year": "B",
+"liturgical_day": "Body & Blood / Corpus Christi",
+"first_reading": "Exodus 24:3-8",
+"psalm": "Psalm 116:12-13, 15-16, 17-18",
+"second_reading": "Hebrews 9:11-15",
+"gospel": "Mark 14:12-16, 22-26"
+},
+{
+"signature": "easter2",
+"cycle_year": "B",
+"liturgical_day": "2nd Sunday of Easter",
+"first_reading": "Acts 4:32-35",
+"psalm": "Psalm 118:2-4, 13-15, 22-24",
+"second_reading": "1 John 5:1-6",
+"gospel": "John 20:19-31"
+},
+{
+"signature": "easter3",
+"cycle_year": "B",
+"liturgical_day": "3rd Sunday of Easter",
+"first_reading": "Acts 3:13-15, 17-19",
+"psalm": "Psalm 4:2, 4, 7-8, 9",
+"second_reading": "1 John 2:1-5a",
+"gospel": "Luke 24:35-48"
+},
+{
+"signature": "easter4",
+"cycle_year": "B",
+"liturgical_day": "4th Sunday of Easter",
+"first_reading": "Acts 4:8-12",
+"psalm": "Psalm 118:1+8-9, 21-23, 26+21+29",
+"second_reading": "1 John 3:1-2",
+"gospel": "John 10:11-18"
+},
+{
+"signature": "easter5",
+"cycle_year": "B",
+"liturgical_day": "5th Sunday of Easter",
+"first_reading": "Acts 9:26-31",
+"psalm": "Psalm 22:26-27, 28+30, 31-32",
+"second_reading": "1 John 3:18-24",
+"gospel": "John 15:1-8"
+},
+{
+"signature": "easter6",
+"cycle_year": "B",
+"liturgical_day": "6th Sunday of Easter",
+"first_reading": "Acts 10:25-26, 34-35, 44-48",
+"psalm": "Psalm 98:1, 2-3a, 3b-4",
+"second_reading": "1 John 4:7-10",
+"gospel": "John 15:9-17"
+},
+{
+"signature": "easter7",
+"cycle_year": "B",
+"liturgical_day": "7th Sunday of Easter – C (note)",
+"first_reading": "Acts 7:55-60",
+"psalm": "Psalm 97:1-2, 6-7, 9",
+"second_reading": "Revelation 22:12-14, 16-17, 20",
+"gospel": "John 17:20-26"
+},
+{
+"signature": "easter_day",
+"cycle_year": "B",
+"liturgical_day": "Easter Sunday: Resurrection of the Lord; Mass of Easter Day – ABC",
+"first_reading": "Acts 10:34a, 37-43",
+"psalm": "Psalm 118:1-2, 16-17, 22-23",
+"second_reading": "Colossians 3:1-4",
+"gospel": "John 20:1-9"
+},
+{
+"signature": "epiphany",
+"cycle_year": "B",
+"liturgical_day": "The Epiphany of the Lord (Solemnity) - ABC [Traditionally celebrated on Jan. 6; in the USA now on the Sunday after Jan. 1]",
+"first_reading": "Isaiah 60:1-6",
+"psalm": "Psalm 72:1-2, 7-8, 10-11, 12-13",
+"second_reading": "Ephesians 3:2-3a, 5-6",
+"gospel": "Matthew 2:1-12"
+},
+{
+"signature": "holy_family",
+"cycle_year": "B",
+"liturgical_day": "The Holy Family - C (optional; new)",
+"first_reading": "opt: 1 Sam 1:20-22, 24-28",
+"psalm": "opt: Ps 84:2-3, 5-6, 9-10",
+"second_reading": "opt: 1 John 3:1-2, 21-24",
+"gospel": "Luke 2:41-52"
+},
+{
+"signature": "lent1",
+"cycle_year": "B",
+"liturgical_day": "1st Sunday of Lent",
+"first_reading": "Genesis 9:8-15",
+"psalm": "Psalm 25:4-5, 6-7, 8-9",
+"second_reading": "1 Peter 3:18-22",
+"gospel": "Mark 1:12-15"
+},
+{
+"signature": "lent2",
+"cycle_year": "B",
+"liturgical_day": "2nd Sunday of Lent",
+"first_reading": "Genesis 22:1-2, 9a, 10-13, 15-18",
+"psalm": "Psalm 116:10+15, 16-17, 18-19",
+"second_reading": "Romans 8:31b-34",
+"gospel": "Mark 9:2-10"
+},
+{
+"signature": "lent3",
+"cycle_year": "B",
+"liturgical_day": "3rd Sunday of Lent",
+"first_reading": "Exodus 20:1-17",
+"psalm": "Psalm 19:8, 9, 10, 11",
+"second_reading": "1 Corinthians 1:22-25",
+"gospel": "John 2:13-25"
+},
+{
+"signature": "lent4",
+"cycle_year": "B",
+"liturgical_day": "4th Sunday of Lent",
+"first_reading": "2 Chronicles 36:14-16, 19-23",
+"psalm": "Psalm 137:1-2, 3, 4-5, 6",
+"second_reading": "Ephesians 2:4-10",
+"gospel": "John 3:14-21"
+},
+{
+"signature": "lent5",
+"cycle_year": "B",
+"liturgical_day": "5th Sunday of Lent",
+"first_reading": "Jeremiah 31:31-34",
+"psalm": "Psalm 51:3-4, 12-13, 14-15",
+"second_reading": "Hebrews 5:7-9",
+"gospel": "John 12:20-33"
+},
+{
+"signature": "mary_mother",
+"cycle_year": "B",
+"liturgical_day": "Jan. 1: The Octave Day of Christmas: Solemnity of the Blessed Virgin Mary, the Mother of God - ABC",
+"first_reading": "Numbers 6:22-27",
+"psalm": "Psalm 67:2-3, 5, 6+8",
+"second_reading": "Galatians 4:4-7",
+"gospel": "Luke 2:16-21"
+},
+{
+"signature": "ot10",
+"cycle_year": "B",
+"liturgical_day": "10th Sunday in Ordinary Time - B",
+"first_reading": "Genesis 3:9-15",
+"psalm": "Psalm 130:1-2, 3-4, 5-6, 7-8",
+"second_reading": "2 Corinthians 4:13—5:1",
+"gospel": "Mark 3:20-35"
+},
+{
+"signature": "ot11",
+"cycle_year": "B",
+"liturgical_day": "11th Sunday in Ordinary Time - B",
+"first_reading": "Ezekiel 17:22-24",
+"psalm": "Psalm 92:2-3, 13-14, 15-16",
+"second_reading": "2 Corinthians 5:6-10",
+"gospel": "Mark 4:26-34"
+},
+{
+"signature": "ot12",
+"cycle_year": "B",
+"liturgical_day": "12th Sunday in Ordinary Time - B",
+"first_reading": "Job 38:1, 8-11",
+"psalm": "Psalm 107:23-24, 25-26, 28-29, 30-31",
+"second_reading": "2 Corinthians 5:14-17",
+"gospel": "Mark 4:35-41"
+},
+{
+"signature": "ot13",
+"cycle_year": "B",
+"liturgical_day": "13th Sunday in Ordinary Time - B",
+"first_reading": "Wisdom 1:13-15; 2:23-24",
+"psalm": "Psalm 30:2+4, 5-6, 11-12a+13b",
+"second_reading": "2 Corinthians 8:7, 9, 13-15",
+"gospel": "Mark 5:21-43"
+},
+{
+"signature": "ot14",
+"cycle_year": "B",
+"liturgical_day": "14th Sunday in Ordinary Time - B",
+"first_reading": "Ezekiel 2:2-5",
+"psalm": "Psalm 123:1-2a, 2bc, 3-4",
+"second_reading": "2 Corinthians 12:7-10",
+"gospel": "Mark 6:1-6"
+},
+{
+"signature": "ot15",
+"cycle_year": "B",
+"liturgical_day": "15th Sunday in Ordinary Time - B",
+"first_reading": "Amos 7:12-15",
+"psalm": "Psalm 85:9ab+10, 11-12, 13-14",
+"second_reading": "Ephesians 1:3-14",
+"gospel": "Mark 6:7-13"
+},
+{
+"signature": "ot16",
+"cycle_year": "B",
+"liturgical_day": "16th Sunday in Ordinary Time - B",
+"first_reading": "Jeremiah 23:1-6",
+"psalm": "Psalm 23:1-3a, 3b-4, 5, 6",
+"second_reading": "Ephesians 2:13-18",
+"gospel": "Mark 6:30-34"
+},
+{
+"signature": "ot17",
+"cycle_year": "B",
+"liturgical_day": "17th Sunday in Ordinary Time - B",
+"first_reading": "2 Kings 4:42-44",
+"psalm": "Psalm 145:10-11, 15-16, 17-18",
+"second_reading": "Ephesians 4:1-6",
+"gospel": "John 6:1-15"
+},
+{
+"signature": "ot18",
+"cycle_year": "B",
+"liturgical_day": "18th Sunday in Ordinary Time - B",
+"first_reading": "Exodus 16:2-4, 12-15",
+"psalm": "Psalm 78:3-4, 23-24, 25+54",
+"second_reading": "Ephesians 4:17, 20-24",
+"gospel": "John 6:24-35"
+},
+{
+"signature": "ot19",
+"cycle_year": "B",
+"liturgical_day": "19th Sunday in Ordinary Time - B",
+"first_reading": "1 Kings 19:4-8",
+"psalm": "Psalm 34:2-3, 4-5, 6-7, 8-9",
+"second_reading": "Ephesians 4:30—5:2",
+"gospel": "John 6:41-51"
+},
+{
+"signature": "ot2",
+"cycle_year": "B",
+"liturgical_day": "2nd Sunday in Ordinary Time - B",
+"first_reading": "1 Samuel 3:3b-10, 19",
+"psalm": "Psalm 40:2+4, 7-8a, 8b-9, 10",
+"second_reading": "1 Corinthians 6:13c-15a, 17-20",
+"gospel": "John 1:35-42"
+},
+{
+"signature": "ot20",
+"cycle_year": "B",
+"liturgical_day": "20th Sunday in Ordinary Time - B [2027: Assumption of the BVM]",
+"first_reading": "Proverbs 9:1-6",
+"psalm": "Psalm 34:2-3, 4-5, 6-7",
+"second_reading": "Ephesians 5:15-20",
+"gospel": "John 6:51-58"
+},
+{
+"signature": "ot21",
+"cycle_year": "B",
+"liturgical_day": "21st Sunday in Ordinary Time - B",
+"first_reading": "Joshua 24:1-2a, 15-17, 18b",
+"psalm": "Psalm 34:2-3, 16-17, 18-19, 20-21",
+"second_reading": "Ephesians 5:21-32",
+"gospel": "John 6:60-69"
+},
+{
+"signature": "ot22",
+"cycle_year": "B",
+"liturgical_day": "22nd Sunday in Ordinary Time - B",
+"first_reading": "Deuteronomy 4:1-2, 6-8",
+"psalm": "Psalm 15:2-3a, 3b-4a, 4b-5",
+"second_reading": "James 1:17-18, 21b-22, 27",
+"gospel": "Mark 7:1-8, 14-15, 21-23"
+},
+{
+"signature": "ot23",
+"cycle_year": "B",
+"liturgical_day": "23rd Sunday in Ordinary Time - B",
+"first_reading": "Isaiah 35:4-7a",
+"psalm": "Psalm 146:6c-7, 8-9a, 9b-10",
+"second_reading": "James 2:1-5",
+"gospel": "Mark 7:31-37"
+},
+{
+"signature": "ot24",
+"cycle_year": "B",
+"liturgical_day": "24th Sunday in Ordinary Time - B",
+"first_reading": "Isaiah 50:5-9a",
+"psalm": "Psalm 116:1-2, 3-4, 5-6, 8-9",
+"second_reading": "James 2:14-18",
+"gospel": "Mark 8:27-35"
+},
+{
+"signature": "ot25",
+"cycle_year": "B",
+"liturgical_day": "25th Sunday in Ordinary Time - B",
+"first_reading": "Wisdom 2:12, 17-20",
+"psalm": "Psalm 54:3-4, 5, 6-8",
+"second_reading": "James 3:16—4:3",
+"gospel": "Mark 9:30-37"
+},
+{
+"signature": "ot26",
+"cycle_year": "B",
+"liturgical_day": "26th Sunday in Ordinary Time - B",
+"first_reading": "Numbers 11:25-29",
+"psalm": "Psalm 19:8, 10, 12-13, 14",
+"second_reading": "James 5:1-6",
+"gospel": "Mark 9:38-43, 45, 47-48"
+},
+{
+"signature": "ot27",
+"cycle_year": "B",
+"liturgical_day": "27th Sunday in Ordinary Time - B",
+"first_reading": "Genesis 2:18-24",
+"psalm": "Psalm 128:1-2, 3, 4-5, 6",
+"second_reading": "Hebrews 2:9-11",
+"gospel": "Mark 10:2-16"
+},
+{
+"signature": "ot28",
+"cycle_year": "B",
+"liturgical_day": "28th Sunday in Ordinary Time - B",
+"first_reading": "Wisdom 7:7-11",
+"psalm": "Psalm 90:12-13, 14-15, 16-17",
+"second_reading": "Hebrews 4:12-13",
+"gospel": "Mark 10:17-30"
+},
+{
+"signature": "ot29",
+"cycle_year": "B",
+"liturgical_day": "29th Sunday in Ordinary Time - B",
+"first_reading": "Isaiah 53:10-11",
+"psalm": "Psalm 33:4-5, 18-19, 20+22",
+"second_reading": "Hebrews 4:14-16",
+"gospel": "Mark 10:35-45"
+},
+{
+"signature": "ot3",
+"cycle_year": "B",
+"liturgical_day": "3rd Sunday in Ordinary Time - B: Sunday of the Word of God*",
+"first_reading": "Jonah 3:1-5, 10",
+"psalm": "Psalm 25:4-5, 6-7, 8-9",
+"second_reading": "1 Corinthians 7:29-31",
+"gospel": "Mark 1:14-20"
+},
+{
+"signature": "ot30",
+"cycle_year": "B",
+"liturgical_day": "30th Sunday in Ordinary Time - B",
+"first_reading": "Jeremiah 31:7-9",
+"psalm": "Psalm 126:1-2a, 2b-3, 4-5, 6",
+"second_reading": "Hebrews 5:1-6",
+"gospel": "Mark 10:46-52"
+},
+{
+"signature": "ot31",
+"cycle_year": "B",
+"liturgical_day": "31st Sunday in Ordinary Time - B",
+"first_reading": "Deuteronomy 6:2-6",
+"psalm": "Psalm 18:2-3a, 3b-4, 47+51",
+"second_reading": "Hebrews 7:23-28",
+"gospel": "Mark 12:28b-34"
+},
+{
+"signature": "ot32",
+"cycle_year": "B",
+"liturgical_day": "32nd Sunday in Ordinary Time - B",
+"first_reading": "1 Kings 17:10-16",
+"psalm": "Psalm 146:6c-7, 8-9a, 9b-10",
+"second_reading": "Hebrews 9:24-28",
+"gospel": "Mark 12:38-44"
+},
+{
+"signature": "ot33",
+"cycle_year": "B",
+"liturgical_day": "33rd Sunday in Ordinary Time - B",
+"first_reading": "Daniel 12:1-3",
+"psalm": "Psalm 16:5+8, 9-10, 11",
+"second_reading": "Hebrews 10:11-14, 18",
+"gospel": "Mark 13:24-32"
+},
+{
+"signature": "ot4",
+"cycle_year": "B",
+"liturgical_day": "4th Sunday in Ordinary Time - B",
+"first_reading": "Deuteronomy 18:15-20",
+"psalm": "Psalm 95:1-2, 6-7b, 7c-9",
+"second_reading": "1 Corinthians 7:32-35",
+"gospel": "Mark 1:21-28"
+},
+{
+"signature": "ot5",
+"cycle_year": "B",
+"liturgical_day": "5th Sunday in Ordinary Time - B",
+"first_reading": "Job 7:1-4, 6-7",
+"psalm": "Psalm 147:1-2, 3-4, 5-6",
+"second_reading": "1 Corinthians 9:16-19, 22-23",
+"gospel": "Mark 1:29-39"
+},
+{
+"signature": "ot6",
+"cycle_year": "B",
+"liturgical_day": "6th Sunday in Ordinary Time - B [omitted in 2027]",
+"first_reading": "Leviticus 13:1-2, 44-46",
+"psalm": "Psalm 32:1-2, 5, 11",
+"second_reading": "1 Corinthians 10:31—11:1",
+"gospel": "Mark 1:40-45"
+},
+{
+"signature": "ot9",
+"cycle_year": "B",
+"liturgical_day": "9th Sunday in Ordinary Time - B [2027: Body & Blood of Christ]",
+"first_reading": "Deuteronomy 5:12-15",
+"psalm": "Psalm 81:3-4, 5-6, 7-8, 10-11",
+"second_reading": "2 Corinthians 4:6-11",
+"gospel": "Mark 2:23—3:6"
+},
+{
+"signature": "palm",
+"cycle_year": "B",
+"liturgical_day": "Good Friday of the Lord’s Passion – ABC",
+"first_reading": "Isaiah 52:13—53:12",
+"psalm": "Psalm 31:2+6, 12-13, 15-16, 17+25",
+"second_reading": "Hebrews 4:14-16; 5:7-9",
+"gospel": "John 18:1—19:42"
+},
+{
+"signature": "pentecost",
+"cycle_year": "B",
+"liturgical_day": "Pentecost Sunday – C (new)",
+"first_reading": "Acts 2:1-11",
+"psalm": "Psalm 104:1+24, 29-30, 31+34",
+"second_reading": "opt: Rom 8:8-17",
+"gospel": "opt: John 14:15-16, 23b-26"
+},
+{
+"signature": "trinity",
+"cycle_year": "B",
+"liturgical_day": "Trinity Sunday",
+"first_reading": "Deuteronomy 4:32-34, 39-40",
+"psalm": "Psalm 33:4-5, 6+9, 18-19, 20+22",
+"second_reading": "Romans 8:14-17",
+"gospel": "Matthew 28:16-20"
+},
+{
+"signature": "advent1",
+"cycle_year": "C",
+"liturgical_day": "1st Sunday of Advent",
+"first_reading": "Jeremiah 33:14-16",
+"psalm": "Psalm 25:4-5, 8-9, 10+14",
+"second_reading": "1 Thessalonians 3:12—4:2",
+"gospel": "Luke 21:25-28, 34-36"
+},
+{
+"signature": "advent2",
+"cycle_year": "C",
+"liturgical_day": "2nd Sunday of Advent",
+"first_reading": "Baruch 5:1-9",
+"psalm": "Psalm 126:1-2a, 2b-3, 4-5, 6",
+"second_reading": "Philippians 1:4-6, 8-11",
+"gospel": "Luke 3:1-6"
+},
+{
+"signature": "advent3",
+"cycle_year": "C",
+"liturgical_day": "3rd Sunday of Advent",
+"first_reading": "Zephaniah 3:14-18a",
+"psalm": "Isaiah 12:2-3, 4bcd, 5-6",
+"second_reading": "Philippians 4:4-7",
+"gospel": "Luke 3:10-18"
+},
+{
+"signature": "advent4",
+"cycle_year": "C",
+"liturgical_day": "4th Sunday of Advent",
+"first_reading": "Micah 5:1-4a",
+"psalm": "Psalm 80:2-3, 15-16, 18-19",
+"second_reading": "Hebrews 10:5-10",
+"gospel": "Luke 1:39-45"
+},
+{
+"signature": "ascension",
+"cycle_year": "C",
+"liturgical_day": "Ascension of the Lord – C (new)",
+"first_reading": "Acts 1:1-11",
+"psalm": "Psalm 47:2-3, 6-7, 8-9",
+"second_reading": "opt: Heb 9:24-28; 10:19-23",
+"gospel": "Luke 24:46-53"
+},
+{
+"signature": "baptism",
+"cycle_year": "C",
+"liturgical_day": "The Baptism of the Lord - C (optional; new)",
+"first_reading": "opt: Isa 40:1-5, 9-11",
+"psalm": "opt: Ps 104:1b-2, 3-4, 24-25, 27-28, 29b-30",
+"second_reading": "opt: Titus 2:11-14; 3:4-7",
+"gospel": "Luke 3:15-16, 21-22"
+},
+{
+"signature": "christ_king",
+"cycle_year": "C",
+"liturgical_day": "34th or Last Sunday in Ordinary Time - C: Solemnity of Our Lord Jesus Christ the King",
+"first_reading": "2 Samuel 5:1-3",
+"psalm": "Psalm 122:1-2, 3-4a, 4b-5",
+"second_reading": "Colossians 1:12-20",
+"gospel": "Luke 23:35-43"
+},
+{
+"signature": "christmas",
+"cycle_year": "C",
+"liturgical_day": "Christmas: Mass during the Day - ABC",
+"first_reading": "Isaiah 52:7-10",
+"psalm": "Psalm 98:1, 2-3a, 3b-4, 5-6",
+"second_reading": "Hebrews 1:1-6",
+"gospel": "John 1:1-18"
+},
+{
+"signature": "corpus_christi",
+"cycle_year": "C",
+"liturgical_day": "Body & Blood / Corpus Christi",
+"first_reading": "Genesis 14:18-20",
+"psalm": "Psalm 110:1, 2, 3, 4",
+"second_reading": "1 Corinthians 11:23-26",
+"gospel": "Luke 9:11b-17"
+},
+{
+"signature": "easter2",
+"cycle_year": "C",
+"liturgical_day": "2nd Sunday of Easter",
+"first_reading": "Acts 5:12-16",
+"psalm": "Psalm 118:2-4, 13-15, 22-24",
+"second_reading": "Revelation 1:9-11a, 12-13, 17-19",
+"gospel": "John 20:19-31"
+},
+{
+"signature": "easter3",
+"cycle_year": "C",
+"liturgical_day": "3rd Sunday of Easter",
+"first_reading": "Acts 5:27-32, 40b-41",
+"psalm": "Psalm 30:2+4, 5-6, 11-12a+13b",
+"second_reading": "Revelation 5:11-14",
+"gospel": "John 21:1-19"
+},
+{
+"signature": "easter4",
+"cycle_year": "C",
+"liturgical_day": "4th Sunday of Easter",
+"first_reading": "Acts 13:14, 43-52",
+"psalm": "Psalm 100:1-2, 3, 5",
+"second_reading": "Revelation 7:9, 14b-17",
+"gospel": "John 10:27-30"
+},
+{
+"signature": "easter5",
+"cycle_year": "C",
+"liturgical_day": "5th Sunday of Easter",
+"first_reading": "Acts 14:21-27",
+"psalm": "Psalm 145:8-9, 10-11, 12-13",
+"second_reading": "Revelation 21:1-5a",
+"gospel": "John 13:31-33a, 34-35"
+},
+{
+"signature": "easter6",
+"cycle_year": "C",
+"liturgical_day": "6th Sunday of Easter",
+"first_reading": "Acts 15:1-2, 22-29",
+"psalm": "Psalm 67:2-3, 5, 6+8",
+"second_reading": "Revelation 21:10-14, 22-23",
+"gospel": "John 14:23-29"
+},
+{
+"signature": "easter7",
+"cycle_year": "C",
+"liturgical_day": "7th Sunday of Easter – C (note)",
+"first_reading": "Acts 7:55-60",
+"psalm": "Psalm 97:1-2, 6-7, 9",
+"second_reading": "Revelation 22:12-14, 16-17, 20",
+"gospel": "John 17:20-26"
+},
+{
+"signature": "easter_day",
+"cycle_year": "C",
+"liturgical_day": "Easter Sunday: Resurrection of the Lord; Mass of Easter Day – ABC",
+"first_reading": "Acts 10:34a, 37-43",
+"psalm": "Psalm 118:1-2, 16-17, 22-23",
+"second_reading": "Colossians 3:1-4",
+"gospel": "John 20:1-9"
+},
+{
+"signature": "epiphany",
+"cycle_year": "C",
+"liturgical_day": "The Epiphany of the Lord (Solemnity) - ABC [Traditionally celebrated on Jan. 6; in the USA now on the Sunday after Jan. 1]",
+"first_reading": "Isaiah 60:1-6",
+"psalm": "Psalm 72:1-2, 7-8, 10-11, 12-13",
+"second_reading": "Ephesians 3:2-3a, 5-6",
+"gospel": "Matthew 2:1-12"
+},
+{
+"signature": "holy_family",
+"cycle_year": "C",
+"liturgical_day": "The Holy Family - C (optional; new)",
+"first_reading": "opt: 1 Sam 1:20-22, 24-28",
+"psalm": "opt: Ps 84:2-3, 5-6, 9-10",
+"second_reading": "opt: 1 John 3:1-2, 21-24",
+"gospel": "Luke 2:41-52"
+},
+{
+"signature": "lent1",
+"cycle_year": "C",
+"liturgical_day": "1st Sunday of Lent",
+"first_reading": "Deuteronomy 26:4-10",
+"psalm": "Psalm 91:1-2, 10-11, 12-13, 14-15",
+"second_reading": "Romans 10:8-13",
+"gospel": "Luke 4:1-13"
+},
+{
+"signature": "lent2",
+"cycle_year": "C",
+"liturgical_day": "2nd Sunday of Lent",
+"first_reading": "Genesis 15:5-12, 17-18",
+"psalm": "Psalm 27:1, 7-8a, 8b-9, 13-14",
+"second_reading": "Philippians 3:17—4:1",
+"gospel": "Luke 9:28b-36"
+},
+{
+"signature": "lent3",
+"cycle_year": "C",
+"liturgical_day": "3rd Sunday of Lent",
+"first_reading": "Exodus 3:1-8a, 13-15",
+"psalm": "Psalm 103:1-2, 3-4, 6-7, 8+11",
+"second_reading": "1 Corinthians 10:1-6, 10-12",
+"gospel": "Luke 13:1-9"
+},
+{
+"signature": "lent4",
+"cycle_year": "C",
+"liturgical_day": "4th Sunday of Lent",
+"first_reading": "Joshua 5:9a, 10-12",
+"psalm": "Psalm 34:2-3, 4-5, 6-7",
+"second_reading": "2 Corinthians 5:17-21",
+"gospel": "Luke 15:1-3, 11-32"
+},
+{
+"signature": "lent5",
+"cycle_year": "C",
+"liturgical_day": "5th Sunday of Lent",
+"first_reading": "Isaiah 43:16-21",
+"psalm": "Psalm 126:1-2a, 2b-3, 4-5, 6",
+"second_reading": "Philippians 3:8-14",
+"gospel": "John 8:1-11"
+},
+{
+"signature": "mary_mother",
+"cycle_year": "C",
+"liturgical_day": "Jan. 1: The Octave Day of Christmas: Solemnity of the Blessed Virgin Mary, the Mother of God - ABC",
+"first_reading": "Numbers 6:22-27",
+"psalm": "Psalm 67:2-3, 5, 6+8",
+"second_reading": "Galatians 4:4-7",
+"gospel": "Luke 2:16-21"
+},
+{
+"signature": "ot12",
+"cycle_year": "C",
+"liturgical_day": "12th Sunday in Ordinary Time - C",
+"first_reading": "Zechariah 12:10-11; 13:1",
+"psalm": "Psalm 63:2, 3-4, 5-6, 8-9",
+"second_reading": "Galatians 3:26-29",
+"gospel": "Luke 9:18-24"
+},
+{
+"signature": "ot13",
+"cycle_year": "C",
+"liturgical_day": "13th Sunday in Ordinary Time - C",
+"first_reading": "1 Kings 19:16b, 19-21",
+"psalm": "Psalm 16:1-2a+5, 7-8, 9-10, 11",
+"second_reading": "Galatians 5:1, 13-18",
+"gospel": "Luke 9:51-62"
+},
+{
+"signature": "ot14",
+"cycle_year": "C",
+"liturgical_day": "14th Sunday in Ordinary Time - C",
+"first_reading": "Isaiah 66:10-14c",
+"psalm": "Psalm 66:1-3, 4-5, 6-7, 16+20",
+"second_reading": "Galatians 6:14-18",
+"gospel": "Luke 10:1-12, 17-20"
+},
+{
+"signature": "ot15",
+"cycle_year": "C",
+"liturgical_day": "15th Sunday in Ordinary Time - C",
+"first_reading": "Deuteronomy 30:10-14",
+"psalm": "Psalm 69:14+17, 30-31, 33-34, 36a+37",
+"second_reading": "Colossians 1:15-20",
+"gospel": "Luke 10:25-37"
+},
+{
+"signature": "ot16",
+"cycle_year": "C",
+"liturgical_day": "16th Sunday in Ordinary Time - C",
+"first_reading": "Genesis 18:1-10a",
+"psalm": "Psalm 15:2-3a, 3b-4, 5",
+"second_reading": "Colossians 1:24-28",
+"gospel": "Luke 10:38-42"
+},
+{
+"signature": "ot17",
+"cycle_year": "C",
+"liturgical_day": "17th Sunday in Ordinary Time - C",
+"first_reading": "Genesis 18:20-32",
+"psalm": "Psalm 138:1-2a, 2b-3, 6-7a, 7b-8",
+"second_reading": "Colossians 2:12-14",
+"gospel": "Luke 11:1-13"
+},
+{
+"signature": "ot18",
+"cycle_year": "C",
+"liturgical_day": "18th Sunday in Ordinary Time - C [2028: Transfiguration of the Lord]",
+"first_reading": "Ecclesiastes 1:2; 2:21-23",
+"psalm": "Psalm 90:3-4, 5-6, 12-13, 14+17",
+"second_reading": "Colossians 3:1-5, 9-11",
+"gospel": "Luke 12:13-21"
+},
+{
+"signature": "ot19",
+"cycle_year": "C",
+"liturgical_day": "19th Sunday in Ordinary Time - C",
+"first_reading": "Wisdom 18:6-9",
+"psalm": "Psalm 33:1+12, 18-19, 20-22",
+"second_reading": "Hebrews 11:1-2, 8-19",
+"gospel": "Luke 12:32-48"
+},
+{
+"signature": "ot2",
+"cycle_year": "C",
+"liturgical_day": "2nd Sunday in Ordinary Time - C",
+"first_reading": "Isaiah 62:1-5",
+"psalm": "Psalm 96:1-2a, 2b-3, 7-8, 9-10",
+"second_reading": "1 Corinthians 12:4-11",
+"gospel": "John 2:1-11"
+},
+{
+"signature": "ot20",
+"cycle_year": "C",
+"liturgical_day": "20th Sunday in Ordinary Time - C",
+"first_reading": "Jeremiah 38:4-6, 8-10",
+"psalm": "Psalm 40:2, 3, 4, 18",
+"second_reading": "Hebrews 12:1-4",
+"gospel": "Luke 12:49-53"
+},
+{
+"signature": "ot21",
+"cycle_year": "C",
+"liturgical_day": "21st Sunday in Ordinary Time - C",
+"first_reading": "Isaiah 66:18-21",
+"psalm": "Psalm 117:1, 2",
+"second_reading": "Hebrews 12:5-7, 11-13",
+"gospel": "Luke 13:22-30"
+},
+{
+"signature": "ot22",
+"cycle_year": "C",
+"liturgical_day": "22nd Sunday in Ordinary Time - C",
+"first_reading": "Sirach 3:17-18, 20, 28-29",
+"psalm": "Psalm 68:4-5, 6-7, 10-11",
+"second_reading": "Hebrews 12:18-19, 22-24a",
+"gospel": "Luke 14:1, 7-14"
+},
+{
+"signature": "ot23",
+"cycle_year": "C",
+"liturgical_day": "23rd Sunday in Ordinary Time - C",
+"first_reading": "Wisdom 9:13-18b",
+"psalm": "Psalm 90:3-4, 5-6, 12-13, 14+17",
+"second_reading": "Phlm 9-10, 12-17",
+"gospel": "Luke 14:25-33"
+},
+{
+"signature": "ot24",
+"cycle_year": "C",
+"liturgical_day": "24th Sunday in Ordinary Time - C",
+"first_reading": "Exodus 32:7-11, 13-14",
+"psalm": "Psalm 51:3-4, 12-13, 17+19",
+"second_reading": "1 Timothy 1:12-17",
+"gospel": "Luke 15:1-32"
+},
+{
+"signature": "ot25",
+"cycle_year": "C",
+"liturgical_day": "25th Sunday in Ordinary Time - C",
+"first_reading": "Amos 8:4-7",
+"psalm": "Psalm 113:1-2, 4-6, 7-8",
+"second_reading": "1 Timothy 2:1-8",
+"gospel": "Luke 16:1-13"
+},
+{
+"signature": "ot26",
+"cycle_year": "C",
+"liturgical_day": "26th Sunday in Ordinary Time - C",
+"first_reading": "Amos 6:1a, 4-7",
+"psalm": "Psalm 146:6c-7, 8-9a, 9b-10",
+"second_reading": "1 Timothy 6:11-16",
+"gospel": "Luke 16:19-31"
+},
+{
+"signature": "ot27",
+"cycle_year": "C",
+"liturgical_day": "27th Sunday in Ordinary Time - C",
+"first_reading": "Habakkuk 1:2-3; 2:2-4",
+"psalm": "Psalm 95:1-2, 6-7b, 7c-9",
+"second_reading": "2 Timothy 1:6-8, 13-14",
+"gospel": "Luke 17:5-10"
+},
+{
+"signature": "ot28",
+"cycle_year": "C",
+"liturgical_day": "28th Sunday in Ordinary Time - C",
+"first_reading": "2 Kings 5:14-17",
+"psalm": "Psalm 98:1, 2-3a, 3b-4",
+"second_reading": "2 Timothy 2:8-13",
+"gospel": "Luke 17:11-19"
+},
+{
+"signature": "ot29",
+"cycle_year": "C",
+"liturgical_day": "29th Sunday in Ordinary Time - C",
+"first_reading": "Exodus 17:8-13",
+"psalm": "Psalm 121:1-2, 3-4, 5-6, 7-8",
+"second_reading": "2 Timothy 3:14—4:2",
+"gospel": "Luke 18:1-8"
+},
+{
+"signature": "ot3",
+"cycle_year": "C",
+"liturgical_day": "3rd Sunday in Ordinary Time - C: Sunday of the Word of God*",
+"first_reading": "Nehemiah 8:2-4a, 5-6, 8-10",
+"psalm": "Psalm 19:8, 9, 10, 15",
+"second_reading": "1 Corinthians 12:12-30",
+"gospel": "Luke 1:1-4; 4:14-21"
+},
+{
+"signature": "ot30",
+"cycle_year": "C",
+"liturgical_day": "30th Sunday in Ordinary Time - C",
+"first_reading": "Sirach 35:12-14, 16-18",
+"psalm": "Psalm 34:2-3, 17-18, 19+23",
+"second_reading": "2 Timothy 4:6-8, 16-18",
+"gospel": "Luke 18:9-14"
+},
+{
+"signature": "ot31",
+"cycle_year": "C",
+"liturgical_day": "31st Sunday in Ordinary Time - C",
+"first_reading": "Wisdom 11:22—12:2",
+"psalm": "Psalm 145:1-2, 8-9, 10-11, 13b-14",
+"second_reading": "2 Thessalonians 1:11—2:2",
+"gospel": "Luke 19:1-10"
+},
+{
+"signature": "ot32",
+"cycle_year": "C",
+"liturgical_day": "32nd Sunday in Ordinary Time - C",
+"first_reading": "2 Maccabees 7:1-2, 9-14",
+"psalm": "Psalm 17:1, 5-6, 8+15",
+"second_reading": "2 Thessalonians 2:16—3:5",
+"gospel": "Luke 20:27-38"
+},
+{
+"signature": "ot33",
+"cycle_year": "C",
+"liturgical_day": "33rd Sunday in Ordinary Time - C",
+"first_reading": "Malachi 3:19-20a",
+"psalm": "Psalm 98:5-6, 7-8, 9",
+"second_reading": "2 Thessalonians 3:7-12",
+"gospel": "Luke 21:5-19"
+},
+{
+"signature": "ot4",
+"cycle_year": "C",
+"liturgical_day": "4th Sunday in Ordinary Time - C",
+"first_reading": "Jeremiah 1:4-5, 17-19",
+"psalm": "Psalm 71:1-2, 3-4, 5-6, 15+17",
+"second_reading": "1 Corinthians 12:31—13:13",
+"gospel": "Luke 4:21-30"
+},
+{
+"signature": "ot5",
+"cycle_year": "C",
+"liturgical_day": "5th Sunday in Ordinary Time - C",
+"first_reading": "Isaiah 6:1-2a, 3-8",
+"psalm": "Psalm 138:1-2a, 2b-3, 4-5, 7-8",
+"second_reading": "1 Corinthians 15:1-11",
+"gospel": "Luke 5:1-11"
+},
+{
+"signature": "ot6",
+"cycle_year": "C",
+"liturgical_day": "6th Sunday in Ordinary Time - C",
+"first_reading": "Jeremiah 17:5-8",
+"psalm": "Psalm 1:1-2, 3, 4+6",
+"second_reading": "1 Corinthians 15:12, 16-20",
+"gospel": "Luke 6:17, 20-26"
+},
+{
+"signature": "ot7",
+"cycle_year": "C",
+"liturgical_day": "7th Sunday in Ordinary Time - C",
+"first_reading": "1 Samuel 26:2, 7-9, 12-13, 22-23",
+"psalm": "Psalm 103:1-2, 3-4, 8+10, 12-13",
+"second_reading": "1 Corinthians 15:45-49",
+"gospel": "Luke 6:27-38"
+},
+{
+"signature": "ot8",
+"cycle_year": "C",
+"liturgical_day": "8th Sunday in Ordinary Time - C",
+"first_reading": "Sirach 27:4-7",
+"psalm": "Psalm 92:2-3, 13-14, 15-16",
+"second_reading": "1 Corinthians 15:54-58",
+"gospel": "Luke 6:39-45"
+},
+{
+"signature": "palm",
+"cycle_year": "C",
+"liturgical_day": "Good Friday of the Lord’s Passion – ABC",
+"first_reading": "Isaiah 52:13—53:12",
+"psalm": "Psalm 31:2+6, 12-13, 15-16, 17+25",
+"second_reading": "Hebrews 4:14-16; 5:7-9",
+"gospel": "John 18:1—19:42"
+},
+{
+"signature": "pentecost",
+"cycle_year": "C",
+"liturgical_day": "Pentecost Sunday – C (new)",
+"first_reading": "Acts 2:1-11",
+"psalm": "Psalm 104:1+24, 29-30, 31+34",
+"second_reading": "opt: Rom 8:8-17",
+"gospel": "opt: John 14:15-16, 23b-26"
+},
+{
+"signature": "trinity",
+"cycle_year": "C",
+"liturgical_day": "Trinity Sunday",
+"first_reading": "Proverbs 8:22-31",
+"psalm": "Psalm 8:4-5, 6-7, 8-9",
+"second_reading": "Romans 5:1-5",
+"gospel": "John 16:12-15"
+}
+]

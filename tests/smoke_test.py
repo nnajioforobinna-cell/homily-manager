@@ -197,10 +197,17 @@ check("Word export is a .docx", r.status_code == 200 and r.data[:2] == b"PK")
 r = client.get("/export/print?scope=all")
 check("print-to-PDF view loads", r.status_code == 200 and b"Save as PDF" in r.data)
 
-# --- Lectionary readings compiled from the homilies ---------------------
-import build_lectionary  # noqa: E402
-bl = build_lectionary.build_from_homilies(db_path=tmp_db.name)
-check("lectionary compiled from homilies", bl["days"] >= 1)
+# --- Official lectionary readings ---------------------------------------
+import load_official_lectionary  # noqa: E402
+n = load_official_lectionary.load_official(db_path=tmp_db.name)
+check("official lectionary loaded (A/B/C)", n > 150)
+import sqlite3 as _sq  # noqa: E402
+_c = _sq.connect(tmp_db.name)
+_row = _c.execute("SELECT gospel FROM lectionary_readings "
+                  "WHERE signature='ot32' AND cycle_year='A'").fetchone()
+_c.close()
+check("official reading is correct (32nd Sun A = Matthew 25)",
+      _row is not None and "Matthew 25" in (_row[0] or ""))
 
 # --- Backup -------------------------------------------------------------
 r = client.get("/backup")

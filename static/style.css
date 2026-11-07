@@ -169,6 +169,7 @@ button.small { padding: 0.3rem 0.6rem; font-size: 0.85rem; white-space: nowrap; 
   padding: 0.5rem 0.8rem; margin: 0.6rem 0 0; font-size: 0.92rem; }
 .plan-readings-label { color: var(--muted); font-size: 0.82rem; margin-bottom: 0.15rem; }
 .plan-readings-label em { font-style: italic; }
+.credit { margin-top: 2rem; font-size: 0.8rem; }
 .lookback { margin-top: 0.8rem; border-top: 1px solid var(--line); padding-top: 0.7rem; }
 .lookback h3 { font-size: 0.95rem; font-weight: normal; color: var(--muted); margin: 0 0 0.5rem; }
 .lookback-list { list-style: none; padding: 0; margin: 0 0 0.7rem; }

@@ -71,7 +71,7 @@ came round three years ago.</p>
 
   {% if it.lectionary and (it.lectionary['first_reading'] or it.lectionary['psalm'] or it.lectionary['second_reading'] or it.lectionary['gospel']) %}
   <div class="plan-readings">
-    <span class="plan-readings-label">Readings for this day <em>(from your homilies — verify)</em></span>
+    <span class="plan-readings-label">Assigned readings{% if it.lectionary['source'] != 'official' %} <em>(from your homilies — verify)</em>{% endif %}</span>
     {% if it.lectionary['first_reading'] %}<span><b>First:</b> {{ it.lectionary['first_reading'] }}</span>{% endif %}
     {% if it.lectionary['psalm'] %}<span><b>Psalm:</b> {{ it.lectionary['psalm'] }}</span>{% endif %}
     {% if it.lectionary['second_reading'] %}<span><b>Second:</b> {{ it.lectionary['second_reading'] }}</span>{% endif %}
@@ -123,4 +123,8 @@ came round three years ago.</p>
   </div>
 </section>
 {% endfor %}
+
+<p class="muted-note credit">Assigned readings: the Roman Catholic Lectionary for
+Mass (1998 USA edition); reference tables compiled by Felix Just, S.J.
+(catholic-resources.org).</p>
 {% endblock %}
