@@ -710,7 +710,6 @@ def export_page():
         "export.html", filters=request.args, count=count,
         word_url=url_for("export_word", **active),
         pdf_url=url_for("export_pdf", **active),
-        print_url=url_for("export_print", **active),
         label=_export_label(request.args),
         types=HOMILY_TYPES, seasons=SEASONS, cycle_years=CYCLE_YEARS)
 
@@ -741,14 +740,6 @@ def export_pdf():
     return send_file(buf, as_attachment=True,
                      download_name=f"{_export_filename()}.pdf",
                      mimetype="application/pdf")
-
-
-@app.route("/export/print")
-def export_print():
-    db = get_db()
-    homilies, label = _export_rows(db, request.args)
-    return render_template("export_print.html", homilies=homilies, label=label,
-                           roles=READING_ROLES)
 
 
 @app.route("/celebrations")

@@ -3,9 +3,9 @@
 {% block content %}
 <h1>Export to Word or PDF</h1>
 <p class="section-note">Choose what to include, then download. <strong>Word</strong>
-gives a <code>.docx</code> you can edit (and "Save as PDF" from Word).
-<strong>PDF</strong> opens a clean print view — use your browser's Print, then
-"Save as PDF".</p>
+gives a <code>.docx</code> you can edit; <strong>PDF</strong> downloads a finished,
+ready-to-print document. Both are built here in full — one homily per page, with
+its readings and text — so even a large export comes out complete.</p>
 
 <form class="filters" method="get" action="{{ url_for('export_page') }}">
   <input type="text" name="liturgical_day" placeholder="Sunday / liturgical day"
@@ -49,7 +49,6 @@ gives a <code>.docx</code> you can edit (and "Save as PDF" from Word).
   {% if count %}
     <a class="btn" href="{{ word_url }}">Export to Word</a>
     <a class="btn" href="{{ pdf_url }}">Export to PDF</a>
-    <a class="clear" href="{{ print_url }}" target="_blank">or open a print view</a>
   {% else %}
     <p class="empty">Nothing matches these filters.</p>
   {% endif %}

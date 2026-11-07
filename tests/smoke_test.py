@@ -217,8 +217,6 @@ check("Word export is a .docx", r.status_code == 200 and r.data[:2] == b"PK")
 r = client.get("/export/pdf")
 check("PDF export is a real PDF file",
       r.status_code == 200 and r.data[:5] == b"%PDF-")
-r = client.get("/export/print")
-check("print view still loads", r.status_code == 200 and b"Save as PDF" in r.data)
 
 # --- Official lectionary readings ---------------------------------------
 import load_official_lectionary  # noqa: E402
