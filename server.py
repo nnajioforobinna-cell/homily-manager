@@ -40,6 +40,9 @@ app = Flask(__name__)
 # signed securely.
 app.secret_key = os.environ.get("HOMILY_SECRET_KEY", "local-only-not-a-secret")
 app.permanent_session_lifetime = datetime.timedelta(days=30)
+# Allow a database upload for restore (the file is a few MB); cap it so a huge
+# upload can't fill the disk.
+app.config["MAX_CONTENT_LENGTH"] = 200 * 1024 * 1024
 
 # A password only when one is set (HOMILY_PASSWORD). Local use on your mac needs
 # none; a hosted copy on the internet must have one, because the funeral records
@@ -666,6 +669,70 @@ def backup_save():
     dest = os.path.join(BACKUP_DIR, f"homilies-{_backup_stamp()}.db")
     _make_backup(dest)
     flash(f"Backup saved: {os.path.basename(dest)}")
+    return redirect(url_for("backup"))
+
+
+def _looks_like_homily_db(path):
+    """True only if the file is a SQLite database that holds a homilies table —
+    so a wrong file can never overwrite your library."""
+    try:
+        with open(path, "rb") as f:
+            if f.read(16) != b"SQLite format 3\x00":
+                return False
+        conn = sqlite3.connect(path)
+        try:
+            row = conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' "
+                "AND name='homilies'").fetchone()
+            return row is not None
+        finally:
+            conn.close()
+    except (OSError, sqlite3.DatabaseError):
+        return False
+
+
+@app.route("/backup/restore", methods=["POST"])
+def backup_restore():
+    """Replace the current library with an uploaded backup file. The current
+    data is copied to a safety backup first, and the file is checked before
+    anything is overwritten."""
+    up = request.files.get("backup_file")
+    if not up or not up.filename:
+        flash("Choose a backup file (.db) to restore first.")
+        return redirect(url_for("backup"))
+
+    tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+    tmp.close()
+    try:
+        up.save(tmp.name)
+        if not _looks_like_homily_db(tmp.name):
+            flash("That file was not a Homily Manager backup, so nothing was "
+                  "changed. Use a .db file downloaded from this Backup page.")
+            return redirect(url_for("backup"))
+
+        # Safety copy of the current data, so a restore can always be undone.
+        os.makedirs(BACKUP_DIR, exist_ok=True)
+        safety = os.path.join(BACKUP_DIR, f"before-restore-{_backup_stamp()}.db")
+        _make_backup(safety)
+
+        # Copy the uploaded database over the live one, in place.
+        src = sqlite3.connect(tmp.name)
+        dst = sqlite3.connect(DB_PATH)
+        try:
+            dst.execute("PRAGMA busy_timeout = 8000")
+            with dst:
+                src.backup(dst)
+        finally:
+            dst.close()
+            src.close()
+        init_db()   # bring an older backup up to the current schema
+        flash("Backup restored. Your previous data was saved first as "
+              f"{os.path.basename(safety)} (in the backups folder).")
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
     return redirect(url_for("backup"))
 
 

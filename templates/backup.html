@@ -24,16 +24,30 @@ lost. (This is separate from the app's code, which is kept on GitHub.)</p>
   <span class="muted-note">Keeps a dated copy in the app's <code>backups</code> folder.</span>
 </form>
 
+<div class="standardize">
+  <h2>Restore from a backup</h2>
+  <p class="section-note">Replace everything currently in the app with a backup
+    file you downloaded earlier (a <code>.db</code> file). Your current data is
+    saved to a safety copy first, so this can be undone. The file is checked
+    before anything is changed.</p>
+  <form method="post" action="{{ url_for('backup_restore') }}"
+        enctype="multipart/form-data" class="backup-save"
+        onsubmit="return confirm('Restore this backup? Everything currently in the app will be replaced with it. A safety copy of the current data is saved first.');">
+    <input type="file" name="backup_file" accept=".db" required>
+    <button type="submit">Restore this file</button>
+  </form>
+</div>
+
 {% if backups %}
-<h3>Backups saved on this mac</h3>
+<h3>Backups saved on this computer</h3>
 <ul class="told-list">
   {% for b in backups %}
   <li><strong>{{ b.name }}</strong> · {{ b.when }} · {{ b.size_kb }} KB</li>
   {% endfor %}
 </ul>
-<p class="muted-note">To go back to one of these, close the app and replace
-  <code>database/homilies.db</code> with the backup file.</p>
+<p class="muted-note">Those named <code>before-restore-…</code> are the safety
+  copies made automatically each time you restore.</p>
 {% else %}
-<p class="empty">No local backups yet.</p>
+<p class="empty">No saved backups yet.</p>
 {% endif %}
 {% endblock %}

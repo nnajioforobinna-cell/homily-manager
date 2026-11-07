@@ -237,6 +237,29 @@ r = client.get("/backup/download")
 check("backup download returns a sqlite file",
       r.status_code == 200 and r.data[:15] == b"SQLite format 3")
 
+# --- Restore from a backup ----------------------------------------------
+import io as _io  # noqa: E402
+good_backup = client.get("/backup/download").data          # a valid snapshot now
+# change the live data, then restore the snapshot and confirm it came back
+import sqlite3 as _s3  # noqa: E402
+_c = _s3.connect(tmp_db.name)
+_c.execute("INSERT INTO homilies (type, title) VALUES ('sunday', 'TEMP DELETE ME')")
+_c.commit(); _c.close()
+r = client.post("/backup/restore",
+                data={"backup_file": (_io.BytesIO(good_backup), "backup.db")},
+                content_type="multipart/form-data", follow_redirects=True)
+check("restore accepts a valid backup", b"Backup restored" in r.data)
+_c = _s3.connect(tmp_db.name)
+_gone = _c.execute("SELECT COUNT(*) FROM homilies WHERE title='TEMP DELETE ME'").fetchone()[0]
+_safety = _c.execute("SELECT COUNT(*) FROM homilies").fetchone()[0]
+_c.close()
+check("restore replaced the data (added row gone)", _gone == 0 and _safety > 0)
+# a non-database file must be rejected
+r = client.post("/backup/restore",
+                data={"backup_file": (_io.BytesIO(b"this is not a database"), "junk.db")},
+                content_type="multipart/form-data", follow_redirects=True)
+check("restore rejects a non-database file", b"not a Homily Manager backup" in r.data)
+
 # The lectionary computes a known date correctly
 import lectionary  # noqa: E402
 import datetime as _d  # noqa: E402
