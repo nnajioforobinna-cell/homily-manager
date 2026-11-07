@@ -36,18 +36,39 @@ removes the free plan's monthly "keep alive" click and lets you use your own web
 address, but start free if you like.
 
 ### 2. Get the code onto the host
-On PythonAnywhere, open **Consoles → Bash** and run:
+Run the commands **one at a time**, waiting for each to finish before pasting the
+next (if you paste several at once and one asks a question, the rest get eaten).
+
+Because the GitHub repository is **private**, a plain `git clone` will stop and
+ask for a GitHub username and password — and GitHub no longer accepts a password
+there. Choose one of these:
+
+**Easiest — make the repository public** (the code contains nothing private; your
+homilies live only in the database, which is never in GitHub). On GitHub: open the
+repo → **Settings** → scroll to **Danger Zone** → **Change visibility → Make
+public** → confirm. Then, on PythonAnywhere, **Consoles → Bash**:
 ```bash
 git clone https://github.com/nnajioforobinna-cell/homily-manager.git
 ```
 
-### 3. Install what the app needs
-Still in the Bash console:
+**Or keep it private, using a token.** On GitHub: click your avatar → **Settings →
+Developer settings → Personal access tokens → Tokens (classic) → Generate new
+token (classic)**, tick the **`repo`** box, generate it, and copy the token. Then
+clone with the token in the address (replace `TOKEN`):
 ```bash
-mkvirtualenv --python=python3.11 homily
+git clone https://nnajioforobinna-cell:TOKEN@github.com/nnajioforobinna-cell/homily-manager.git
+```
+
+Either way, you should end with a `homily-manager` folder (check with `ls`).
+
+### 3. Install what the app needs
+Still in the Bash console (the `(homily)` virtualenv from earlier is fine; if it
+is not active, run `workon homily` first):
+```bash
 pip install -r homily-manager/app/requirements.txt
 ```
-(The prompt will show `(homily)` once the environment is active.)
+(If you have not made the virtualenv yet: `mkvirtualenv --python=python3.11 homily`
+first, then the `pip install` line.)
 
 ### 4. Put your database in place
 Open the **Files** tab, go to
