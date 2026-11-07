@@ -60,9 +60,15 @@ def inject_login_state():
 def require_login():
     if not PASSWORD or session.get("authed"):
         return
-    if request.endpoint in ("login", "static"):
+    if request.endpoint in ("login", "static", "ping"):
         return
     return redirect(url_for("login", next=request.path))
+
+
+@app.route("/ping")
+def ping():
+    """A tiny endpoint the page checks to show the live 'synced' indicator."""
+    return {"ok": True}
 
 
 @app.route("/login", methods=["GET", "POST"])

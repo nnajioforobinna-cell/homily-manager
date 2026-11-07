@@ -260,6 +260,10 @@ r = client.post("/backup/restore",
                 content_type="multipart/form-data", follow_redirects=True)
 check("restore rejects a non-database file", b"not a Homily Manager backup" in r.data)
 
+# --- Sync indicator endpoint --------------------------------------------
+r = client.get("/ping")
+check("ping endpoint responds ok", r.status_code == 200 and b"true" in r.data)
+
 # The lectionary computes a known date correctly
 import lectionary  # noqa: E402
 import datetime as _d  # noqa: E402

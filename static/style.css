@@ -1,3 +1,4 @@
+/* Light palette (the default) */
 :root {
   --bg: #f7f5f0;
   --panel: #ffffff;
@@ -8,8 +9,10 @@
   --accent-ink: #ffffff;
   --danger: #9a2c2c;
 }
+/* Dark palette, written once and used by both the system setting (unless the
+   reader forced light) and a manual "dark" choice. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #1b1a17;
     --panel: #26241f;
     --ink: #eee9df;
@@ -19,6 +22,16 @@
     --accent-ink: #1b1a17;
     --danger: #e07a7a;
   }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1a17;
+  --panel: #26241f;
+  --ink: #eee9df;
+  --muted: #a9a399;
+  --line: #3a3730;
+  --accent: #c7a36a;
+  --accent-ink: #1b1a17;
+  --danger: #e07a7a;
 }
 
 * { box-sizing: border-box; }
@@ -40,6 +53,25 @@ a { color: var(--accent); }
 .brand { font-size: 1.3rem; font-weight: bold; text-decoration: none; color: var(--ink); }
 .topbar nav { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
 .topbar nav a { text-decoration: none; }
+
+/* Sync indicator + theme toggle, on the right of the header */
+.topbar-tools { display: flex; align-items: center; gap: 0.9rem; margin-left: auto; }
+.sync { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted);
+  font-size: 0.82rem; white-space: nowrap; }
+.sync-dot { width: 0.6rem; height: 0.6rem; border-radius: 50%;
+  background: #9a9a9a; flex: 0 0 auto; transition: background 0.3s; }
+.sync.is-online .sync-dot { background: #3f9a52; box-shadow: 0 0 0 0 rgba(63,154,82,.5);
+  animation: syncpulse 2.4s infinite; }
+.sync.is-offline .sync-dot { background: var(--danger); animation: none; }
+@keyframes syncpulse {
+  0% { box-shadow: 0 0 0 0 rgba(63,154,82,.45); }
+  70% { box-shadow: 0 0 0 0.35rem rgba(63,154,82,0); }
+  100% { box-shadow: 0 0 0 0 rgba(63,154,82,0); }
+}
+.theme-btn { background: transparent; border: 1px solid var(--line); color: var(--ink);
+  border-radius: 999px; padding: 0.3rem 0.7rem; font: inherit; font-size: 0.85rem;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; }
+.theme-btn:hover { border-color: var(--accent); }
 
 main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
 h1 { font-weight: normal; }

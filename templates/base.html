@@ -12,6 +12,16 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Homilies">
+  <script>
+    /* Apply the saved theme before the page paints (no flash of the wrong one). */
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "dark" || t === "light")
+          document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <header class="topbar">
@@ -29,6 +39,14 @@
       <a href="{{ url_for('backup') }}">Backup</a>
       <a class="btn" href="{{ url_for('homily_new') }}">+ New homily</a>
       {% if login_enabled and logged_in %}<a href="{{ url_for('logout') }}">Sign out</a>{% endif %}
+      <span class="topbar-tools">
+        <span class="sync" id="sync-indicator" title="Checking the connection…">
+          <span class="sync-dot"></span><span class="sync-label">…</span>
+        </span>
+        <button type="button" class="theme-btn" id="theme-btn" title="Light, dark, or match your device">
+          <span id="theme-icon">🌓</span><span id="theme-label">Theme</span>
+        </button>
+      </span>
     </nav>
   </header>
 
@@ -40,5 +58,62 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
+
+  <script>
+  // --- Theme toggle: Auto -> Light -> Dark -> Auto, remembered ---------
+  (function () {
+    var btn = document.getElementById("theme-btn");
+    var icon = document.getElementById("theme-icon");
+    var label = document.getElementById("theme-label");
+    var meta = document.querySelector('meta[name="theme-color"]');
+    var FACES = { auto: ["🌓", "Auto"], light: ["☀️", "Light"], dark: ["🌙", "Dark"] };
+    function current() {
+      try { return localStorage.getItem("theme") || "auto"; } catch (e) { return "auto"; }
+    }
+    function apply(mode) {
+      if (mode === "auto") document.documentElement.removeAttribute("data-theme");
+      else document.documentElement.setAttribute("data-theme", mode);
+      if (icon) { icon.textContent = FACES[mode][0]; label.textContent = FACES[mode][1]; }
+      if (meta) {
+        var dark = mode === "dark" || (mode === "auto" &&
+          window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches);
+        meta.setAttribute("content", dark ? "#1b1a17" : "#6b4f2a");
+      }
+    }
+    apply(current());
+    if (btn) btn.addEventListener("click", function () {
+      var order = ["auto", "light", "dark"];
+      var next = order[(order.indexOf(current()) + 1) % 3];
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      apply(next);
+    });
+  })();
+
+  // --- Sync / connection indicator ------------------------------------
+  (function () {
+    var el = document.getElementById("sync-indicator");
+    if (!el) return;
+    var lbl = el.querySelector(".sync-label");
+    function set(online) {
+      el.classList.toggle("is-online", online);
+      el.classList.toggle("is-offline", !online);
+      lbl.textContent = online ? "Synced" : "Offline";
+      el.title = online
+        ? "Connected — your changes are saved to the server."
+        : "No connection — changes can't be saved until this is back.";
+    }
+    function check() {
+      if (navigator.onLine === false) { set(false); return; }
+      fetch("{{ url_for('ping') }}", { cache: "no-store" })
+        .then(function (r) { set(r.ok); })
+        .catch(function () { set(false); });
+    }
+    check();
+    setInterval(check, 20000);
+    window.addEventListener("online", check);
+    window.addEventListener("offline", function () { set(false); });
+    window.addEventListener("focus", check);
+  })();
+  </script>
 </body>
 </html>
