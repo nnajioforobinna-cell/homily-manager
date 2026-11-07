@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in — Homily Manager</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main style="max-width: 24rem; margin: 4rem auto;">
+    <h1 style="text-align:center;">Homily Manager</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<div class="flash">{% for m in messages %}<p>{{ m }}</p>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    {% if error %}<div class="flash" style="border-left-color: var(--danger);"><p>{{ error }}</p></div>{% endif %}
+    <form method="post" class="homily-form">
+      <label>Password
+        <input type="password" name="password" autofocus required autocomplete="current-password">
+      </label>
+      <button type="submit">Sign in</button>
+    </form>
+    <p class="muted-note" style="text-align:center; margin-top:1.5rem;">
+      This is your private homily library.</p>
+  </main>
+</body>
+</html>

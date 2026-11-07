@@ -14,12 +14,13 @@ import os
 import re
 import io
 import html
+import hmac
 import sqlite3
 import datetime
 import tempfile
 from flask import (
     Flask, g, render_template, request, redirect, url_for, flash, abort,
-    send_file
+    send_file, session
 )
 from markupsafe import Markup
 import lectionary
@@ -34,7 +35,53 @@ BACKUP_DIR = os.path.join(BASE_DIR, "backups")
 PORT = int(os.environ.get("HOMILY_PORT", "5050"))
 
 app = Flask(__name__)
-app.secret_key = "local-only-not-a-secret"  # only used for flash messages
+# On your own mac the default key is fine (flash messages only). When the app is
+# put online, set HOMILY_SECRET_KEY to a long random value so login sessions are
+# signed securely.
+app.secret_key = os.environ.get("HOMILY_SECRET_KEY", "local-only-not-a-secret")
+app.permanent_session_lifetime = datetime.timedelta(days=30)
+
+# A password only when one is set (HOMILY_PASSWORD). Local use on your mac needs
+# none; a hosted copy on the internet must have one, because the funeral records
+# hold personal details. When set, every page requires logging in first.
+PASSWORD = os.environ.get("HOMILY_PASSWORD")
+
+
+@app.context_processor
+def inject_login_state():
+    return {"login_enabled": bool(PASSWORD),
+            "logged_in": bool(session.get("authed"))}
+
+
+@app.before_request
+def require_login():
+    if not PASSWORD or session.get("authed"):
+        return
+    if request.endpoint in ("login", "static"):
+        return
+    return redirect(url_for("login", next=request.path))
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if not PASSWORD:
+        return redirect(url_for("index"))
+    error = None
+    if request.method == "POST":
+        if hmac.compare_digest(request.form.get("password", ""), PASSWORD):
+            session["authed"] = True
+            session.permanent = True
+            dest = request.args.get("next") or url_for("index")
+            return redirect(dest)
+        error = "That password was not right."
+    return render_template("login.html", error=error)
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("Signed out.")
+    return redirect(url_for("login"))
 
 
 def format_body(text):
@@ -1131,7 +1178,12 @@ def homily_clear_flag(homily_id):
     return redirect(url_for("homily_edit", homily_id=homily_id))
 
 
+# Make sure the database exists and is up to date. This runs however the app is
+# started - the dev server below, or a production server (gunicorn) that imports
+# `app` without running this file as __main__.
+init_db()
+
+
 if __name__ == "__main__":
-    init_db()
     print(f"Homily Manager is running. Open http://127.0.0.1:{PORT} in your browser.")
     app.run(host="127.0.0.1", port=PORT, debug=True)

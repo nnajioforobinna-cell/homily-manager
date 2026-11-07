@@ -245,6 +245,21 @@ check("lectionary: Easter 2027 is 28 March",
 ck = lectionary.classify(_d.date(2026, 11, 22))
 check("lectionary: Christ the King 2026", ck and ck["ot_number"] == 34)
 
+# --- Login (only enforced when a password is set, i.e. when hosted) ------
+check("no login required locally (no password set)",
+      client.get("/").status_code == 200)
+server.PASSWORD = "testpass123"
+guard = server.app.test_client()
+r = guard.get("/")
+check("login required when a password is set",
+      r.status_code == 302 and "/login" in r.headers.get("Location", ""))
+guard.post("/login", data={"password": "nope"})
+check("wrong password does not sign in",
+      guard.get("/").status_code == 302)
+guard.post("/login", data={"password": "testpass123"})
+check("correct password signs in", guard.get("/").status_code == 200)
+server.PASSWORD = None   # reset so nothing else is affected
+
 os.unlink(tmp_db.name)
 
 if failures:

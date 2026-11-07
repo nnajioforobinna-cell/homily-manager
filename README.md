@@ -44,6 +44,11 @@ To stop the app, close the window that opened, or press Control-C in it.
 The first run creates your database at `database/homilies.db`. That file is your
 library.
 
+**On your iPad or phone, even when the mac is off:** the app can be put online.
+See `docs/DEPLOY.md` for a step-by-step guide. Online, it requires a password
+(set `HOMILY_PASSWORD`); on your own mac it needs none. Also set
+`HOMILY_SECRET_KEY` to a long random value when hosting.
+
 ## Using it
 
 - **Congregations** — add your parish first, so homilies can be tied to it.
