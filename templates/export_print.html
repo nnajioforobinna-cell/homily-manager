@@ -12,9 +12,15 @@
     .toolbar button { font: inherit; padding: 0.4rem 0.9rem; border-radius: 6px;
       border: none; background: #6b4f2a; color: #fff; cursor: pointer; }
     h1.cover { font-size: 2rem; }
-    .homily { page-break-after: always; }
-    .homily:last-child { page-break-after: auto; }
-    .h-title { font-size: 1.4rem; margin: 0 0 0.3rem; }
+    /* Flow the homilies naturally with a separator between them. Forcing a page
+       break after every homily made Chrome cap the print at the first few pages,
+       so the saved/printed file came out short. Letting them flow prints them
+       all; a homily is kept from splitting across a page only when it fits. */
+    .homily { margin: 0 0 1.6rem; padding-bottom: 1.2rem;
+      border-bottom: 1px solid #ccc; }
+    .homily:last-child { border-bottom: none; }
+    .h-title { font-size: 1.4rem; margin: 0 0 0.3rem; break-after: avoid;
+      page-break-after: avoid; }
     .h-meta { color: #6b665d; font-style: italic; margin: 0 0 0.3rem; }
     .h-person { margin: 0 0 0.4rem; }
     .h-readings { font-size: 0.92rem; background: #f6f3ee; border: 1px solid #e2ddd3;
@@ -29,7 +35,8 @@
 <body>
   <div class="toolbar">
     <button onclick="window.print()">Print / Save as PDF</button>
-    &nbsp; Then choose <strong>"Save as PDF"</strong> as the destination.
+    &nbsp; Then choose <strong>"Save as PDF"</strong> as the destination. For a very
+    large export, the <strong>Export to PDF</strong> button downloads a file directly.
   </div>
 
   <h1 class="cover">Homily Manager — {{ label }}</h1>
