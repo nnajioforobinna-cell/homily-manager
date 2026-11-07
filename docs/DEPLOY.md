@@ -65,14 +65,14 @@ Either way, you should end with a `homily-manager` folder (check with `ls`).
 Still in the Bash console (the `(homily)` virtualenv from earlier is fine; if it
 is not active, run `workon homily` first):
 ```bash
-pip install -r homily-manager/app/requirements.txt
+pip install -r homily-manager/requirements.txt
 ```
 (If you have not made the virtualenv yet: `mkvirtualenv --python=python3.11 homily`
 first, then the `pip install` line.)
 
 ### 4. Put your database in place
 Open the **Files** tab, go to
-`homily-manager/app/database/`, and **Upload** the backup file you downloaded in
+`homily-manager/database/`, and **Upload** the backup file you downloaded in
 step 0. Then rename it to exactly **`homilies.db`** (use the pencil/rename icon).
 If you skip this, the app simply starts with an empty library.
 
@@ -92,9 +92,9 @@ On the Web tab:
 
   os.environ["HOMILY_PASSWORD"]   = "choose-a-strong-password"
   os.environ["HOMILY_SECRET_KEY"] = "paste-the-long-random-string-here"
-  os.environ["HOMILY_DB"] = "/home/USERNAME/homily-manager/app/database/homilies.db"
+  os.environ["HOMILY_DB"] = "/home/USERNAME/homily-manager/database/homilies.db"
 
-  path = "/home/USERNAME/homily-manager/app"
+  path = "/home/USERNAME/homily-manager"
   if path not in sys.path:
       sys.path.insert(0, path)
 
