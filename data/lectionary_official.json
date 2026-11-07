@@ -72,6 +72,15 @@
 "gospel": "John 1:1-18"
 },
 {
+"signature": "corpus_christi",
+"cycle_year": "A",
+"liturgical_day": "Sunday after Trinity Sunday: Solemnity of the Most Holy Body and Blood of Christ (formerly called “Corpus Christi”)",
+"first_reading": "Deuteronomy 8:2-3, 14b-16a",
+"psalm": "Psalm 147:12-13, 14-15, 19-20",
+"second_reading": "1 Corinthians 10:16-17",
+"gospel": "John 6:51-58"
+},
+{
 "signature": "easter2",
 "cycle_year": "A",
 "liturgical_day": "2nd Sunday of Easter – A (Sunday of Divine Mercy)",
@@ -497,11 +506,11 @@
 {
 "signature": "trinity",
 "cycle_year": "A",
-"liturgical_day": "Sunday after Trinity Sunday: Solemnity of the Most Holy Body and Blood of Christ (formerly called “Corpus Christi”)",
-"first_reading": "Deuteronomy 8:2-3, 14b-16a",
-"psalm": "Psalm 147:12-13, 14-15, 19-20",
-"second_reading": "1 Corinthians 10:16-17",
-"gospel": "John 6:51-58"
+"liturgical_day": "Sunday after Pentecost: Solemnity of the Most Holy Trinity",
+"first_reading": "Exodus 34:4b-6, 8-9",
+"psalm": "Daniel 3:52, 53, 54, 55",
+"second_reading": "2 Corinthians 13:11-13",
+"gospel": "John 3:16-18"
 },
 {
 "signature": "advent1",

@@ -625,20 +625,48 @@ def backup_save():
 # --------------------------------------------------------------------------
 # Export everything to Word or PDF
 # --------------------------------------------------------------------------
-EXPORT_SCOPES = {
-    "all": ("All homilies", "h.status != 'archived'"),
-    "library": ("The library",
-                "h.type IN ('sunday','weekday','feast','other') AND h.status != 'archived'"),
-    "funerals": ("Funerals", "h.type = 'funeral'"),
-    "celebrations": ("Weddings & baptisms", "h.type IN ('wedding','baptism')"),
-}
+def _export_query(args):
+    """Build the WHERE clause for an export from the filter arguments."""
+    clauses, params = [], []
+    if args.get("show_archived") != "1":
+        clauses.append("h.status != 'archived'")
+    if args.get("type"):
+        clauses.append("h.type = ?"); params.append(args["type"])
+    if args.get("season"):
+        clauses.append("h.season = ?"); params.append(args["season"])
+    if args.get("cycle_year"):
+        clauses.append("h.cycle_year = ?"); params.append(args["cycle_year"])
+    if args.get("liturgical_day", "").strip():
+        clauses.append("h.liturgical_day LIKE ?")
+        params.append(f"%{args['liturgical_day'].strip()}%")
+    if args.get("q", "").strip():
+        like = f"%{args['q'].strip()}%"
+        clauses.append("(h.title LIKE ? OR h.body LIKE ?)"); params += [like, like]
+    return (" AND ".join(clauses) if clauses else "1=1"), params
 
 
-def _export_rows(db, scope):
-    label, where = EXPORT_SCOPES.get(scope, EXPORT_SCOPES["all"])
+def _export_label(args):
+    bits = []
+    labels = {
+        "type": dict(HOMILY_TYPES), "season": dict(SEASONS),
+        "cycle_year": {v: "Year " + v for v, _ in CYCLE_YEARS},
+    }
+    for key in ("type", "season", "cycle_year"):
+        if args.get(key):
+            bits.append(labels[key].get(args[key], args[key]))
+    if args.get("liturgical_day", "").strip():
+        bits.append(args["liturgical_day"].strip())
+    if args.get("q", "").strip():
+        bits.append(f'"{args["q"].strip()}"')
+    return ", ".join(bits) if bits else "All homilies"
+
+
+def _export_rows(db, args):
+    where, params = _export_query(args)
+    label = _export_label(args)
     rows = db.execute(
         f"SELECT * FROM homilies h WHERE {where} "
-        "ORDER BY h.type, h.cycle_year, h.liturgical_day, h.title"
+        "ORDER BY h.type, h.cycle_year, h.liturgical_day, h.title", params
     ).fetchall()
     out = []
     for r in rows:
@@ -666,33 +694,47 @@ def _export_rows(db, scope):
     return out, label
 
 
+EXPORT_FILTER_KEYS = ("type", "season", "cycle_year", "liturgical_day", "q",
+                      "show_archived")
+
+
 @app.route("/export")
 def export_page():
     db = get_db()
-    counts = {k: db.execute(
-        f"SELECT COUNT(*) FROM homilies h WHERE {w}").fetchone()[0]
-        for k, (_lbl, w) in EXPORT_SCOPES.items()}
-    return render_template("export.html", scopes=EXPORT_SCOPES, counts=counts)
+    where, params = _export_query(request.args)
+    count = db.execute(
+        f"SELECT COUNT(*) FROM homilies h WHERE {where}", params).fetchone()[0]
+    active = {k: request.args[k] for k in EXPORT_FILTER_KEYS
+              if request.args.get(k)}
+    return render_template(
+        "export.html", filters=request.args, count=count,
+        word_url=url_for("export_word", **active),
+        print_url=url_for("export_print", **active),
+        label=_export_label(request.args),
+        types=HOMILY_TYPES, seasons=SEASONS, cycle_years=CYCLE_YEARS)
+
+
+def _export_filename():
+    slug = re.sub(r"[^a-z0-9]+", "-",
+                  _export_label(request.args).lower()).strip("-") or "homilies"
+    return f"homilies-{slug}-{datetime.date.today().isoformat()}"
 
 
 @app.route("/export/word")
 def export_word():
     import exporter
     db = get_db()
-    scope = request.args.get("scope", "all")
-    homilies, label = _export_rows(db, scope)
+    homilies, label = _export_rows(db, request.args)
     buf = exporter.build_docx(f"Homily Manager — {label}", homilies)
-    stamp = datetime.date.today().isoformat()
     return send_file(
-        buf, as_attachment=True, download_name=f"homilies-{scope}-{stamp}.docx",
+        buf, as_attachment=True, download_name=f"{_export_filename()}.docx",
         mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 
 @app.route("/export/print")
 def export_print():
     db = get_db()
-    scope = request.args.get("scope", "all")
-    homilies, label = _export_rows(db, scope)
+    homilies, label = _export_rows(db, request.args)
     return render_template("export_print.html", homilies=homilies, label=label,
                            roles=READING_ROLES)
 

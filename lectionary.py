@@ -208,8 +208,10 @@ def signature(season, text):
     t = (text or "").lower()
     pairs = [
         ("christ_king", ("king of the universe", "christ the king")),
-        ("trinity", ("holy trinity", "trinity sunday")),
+        # Corpus Christi before Trinity: the Year A label reads "Sunday after
+        # Trinity Sunday: ... Body and Blood ...", so the more specific match wins.
         ("corpus_christi", ("body and blood", "corpus christi")),
+        ("trinity", ("holy trinity", "trinity sunday")),
         ("pentecost", ("pentecost",)),
         ("palm", ("palm sunday", "passion")),
         ("easter_day", ("easter sunday", "resurrection")),

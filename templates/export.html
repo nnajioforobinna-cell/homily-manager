@@ -2,25 +2,60 @@
 {% block title %}Export - Homily Manager{% endblock %}
 {% block content %}
 <h1>Export to Word or PDF</h1>
-<p class="section-note">Make a single document of your homilies — to print, to
-keep, or to share. <strong>Word</strong> downloads a <code>.docx</code> you can
-open and edit (and "Save as PDF" from Word). <strong>PDF</strong> opens a clean
-print view — use your browser's Print, then "Save as PDF".</p>
+<p class="section-note">Choose what to include, then download. <strong>Word</strong>
+gives a <code>.docx</code> you can edit (and "Save as PDF" from Word).
+<strong>PDF</strong> opens a clean print view — use your browser's Print, then
+"Save as PDF".</p>
 
-<ul class="export-list">
-  {% for key, (label, _w) in scopes.items() %}
-  <li>
-    <div>
-      <strong>{{ label }}</strong>
-      <div class="meta"><span>{{ counts[key] }} homil{{ 'y' if counts[key] == 1 else 'ies' }}</span></div>
-    </div>
-    <div class="export-buttons">
-      <a class="btn" href="{{ url_for('export_word', scope=key) }}">Word</a>
-      <a class="btn" href="{{ url_for('export_print', scope=key) }}" target="_blank">PDF (print)</a>
-    </div>
-  </li>
-  {% endfor %}
-</ul>
-<p class="muted-note">A large export (everything) can take a few seconds and will
-be a long document — that is expected.</p>
+<form class="filters" method="get" action="{{ url_for('export_page') }}">
+  <input type="text" name="liturgical_day" placeholder="Sunday / liturgical day"
+         value="{{ filters.get('liturgical_day', '') }}">
+  <input type="search" name="q" placeholder="Search title and text"
+         value="{{ filters.get('q', '') }}">
+
+  <select name="type">
+    <option value="">Any type</option>
+    {% for v, label in types %}
+      <option value="{{ v }}" {% if filters.get('type') == v %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="season">
+    <option value="">Any season</option>
+    {% for v, label in seasons %}
+      <option value="{{ v }}" {% if filters.get('season') == v %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="cycle_year">
+    <option value="">Any year</option>
+    {% for v, label in cycle_years %}
+      <option value="{{ v }}" {% if filters.get('cycle_year') == v %}selected{% endif %}>Year {{ label }}</option>
+    {% endfor %}
+  </select>
+
+  <label class="checkbox">
+    <input type="checkbox" name="show_archived" value="1" {% if filters.get('show_archived') == '1' %}checked{% endif %}>
+    Include archived
+  </label>
+
+  <button type="submit">Apply filter</button>
+  <a class="clear" href="{{ url_for('export_page') }}">Clear</a>
+</form>
+
+<p class="count"><strong>{{ label }}</strong> — {{ count }} homil{{ 'y' if count == 1 else 'ies' }} to export</p>
+
+<div class="export-buttons">
+  {% if count %}
+    <a class="btn" href="{{ word_url }}">Export to Word</a>
+    <a class="btn" href="{{ print_url }}" target="_blank">Export to PDF (print)</a>
+  {% else %}
+    <p class="empty">Nothing matches these filters.</p>
+  {% endif %}
+</div>
+
+<p class="muted-note" style="margin-top:1rem;">Tip: pick a <em>Season</em> and a
+<em>Year</em> to export, say, all of Lent in Year B; or type a Sunday in the
+"liturgical day" box to gather every year you preached it. A large export can take
+a few seconds.</p>
 {% endblock %}
