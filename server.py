@@ -709,6 +709,7 @@ def export_page():
     return render_template(
         "export.html", filters=request.args, count=count,
         word_url=url_for("export_word", **active),
+        pdf_url=url_for("export_pdf", **active),
         print_url=url_for("export_print", **active),
         label=_export_label(request.args),
         types=HOMILY_TYPES, seasons=SEASONS, cycle_years=CYCLE_YEARS)
@@ -729,6 +730,17 @@ def export_word():
     return send_file(
         buf, as_attachment=True, download_name=f"{_export_filename()}.docx",
         mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
+
+@app.route("/export/pdf")
+def export_pdf():
+    import exporter
+    db = get_db()
+    homilies, label = _export_rows(db, request.args)
+    buf = exporter.build_pdf(f"Homily Manager — {label}", homilies)
+    return send_file(buf, as_attachment=True,
+                     download_name=f"{_export_filename()}.pdf",
+                     mimetype="application/pdf")
 
 
 @app.route("/export/print")
