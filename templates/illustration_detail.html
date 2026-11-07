@@ -22,15 +22,51 @@
 <p class="empty">Not yet recorded as told anywhere with a date and congregation.</p>
 {% endif %}
 
-{% if used_in %}
 <h3>Used in</h3>
+{% if used_in %}
 <ul class="homily-list">
   {% for h in used_in %}
-  <li><a class="homily-title" href="{{ url_for('homily_read', homily_id=h['id']) }}">{{ h['title'] }}</a>
-    <span class="tag type">{{ h['type'] }}</span></li>
+  <li class="link-row">
+    <span>
+      <a class="homily-title" href="{{ url_for('homily_read', homily_id=h['id']) }}">{{ h['title'] }}</a>
+      <span class="tag type">{{ h['type'] }}</span>
+    </span>
+    <form method="post" action="{{ url_for('illustration_unlink', ill_id=ill['id']) }}">
+      <input type="hidden" name="homily_id" value="{{ h['id'] }}">
+      <button type="submit" class="link-danger">Unlink</button>
+    </form>
+  </li>
   {% endfor %}
 </ul>
+{% else %}
+<p class="empty">Not linked to any homily yet.</p>
 {% endif %}
+
+<details class="plan-edit" {% if find %}open{% endif %}>
+  <summary>Link this story to a homily</summary>
+  <form method="get" action="{{ url_for('illustration_detail', ill_id=ill['id']) }}" class="inline-form">
+    <input type="search" name="find" value="{{ find }}" placeholder="Search homilies by title or day">
+    <button type="submit">Search</button>
+  </form>
+  {% if find %}
+    {% if matches %}
+    <ul class="homily-list">
+      {% for m in matches %}
+      <li class="link-row">
+        <span><a class="homily-title" href="{{ url_for('homily_read', homily_id=m['id']) }}">{{ m['title'] }}</a>
+          <span class="tag type">{{ m['type'] }}</span></span>
+        <form method="post" action="{{ url_for('illustration_link', ill_id=ill['id']) }}">
+          <input type="hidden" name="homily_id" value="{{ m['id'] }}">
+          <button type="submit">Link</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">No unlinked homilies match "{{ find }}".</p>
+    {% endif %}
+  {% endif %}
+</details>
 
 <details class="plan-edit">
   <summary>Edit this story</summary>

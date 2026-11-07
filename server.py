@@ -791,8 +791,24 @@ def import_page():
     by_type = db.execute(
         "SELECT type, COUNT(*) n FROM homilies GROUP BY type ORDER BY n DESC"
     ).fetchall()
+    standardized = db.execute(
+        "SELECT COUNT(*) FROM homilies WHERE type IN ('sunday','feast') "
+        "AND cycle_year IS NOT NULL").fetchone()[0]
     return render_template(
-        "import.html", summary=summary, stats=stats, by_type=by_type)
+        "import.html", summary=summary, stats=stats, by_type=by_type,
+        standardizable=standardized)
+
+
+@app.route("/standardize-readings", methods=["POST"])
+def standardize_readings():
+    """Set every Sunday/feast homily's readings to the official assigned readings
+    for its day — handy after importing new homilies."""
+    import load_official_lectionary
+    load_official_lectionary.load_official(db_path=DB_PATH)
+    s = load_official_lectionary.apply_to_homilies(db_path=DB_PATH)
+    flash(f"Applied the official readings to {s['matched']} Sunday/feast "
+          f"homilies. ({s['no_match']} had no match and were left as they were.)")
+    return redirect(url_for("import_page"))
 
 
 # --------------------------------------------------------------------------
@@ -1042,8 +1058,42 @@ def illustration_detail(ill_id):
         "LEFT JOIN congregations c ON c.id = o.congregation_id "
         "WHERE hi.illustration_id = ? "
         "ORDER BY o.date_preached DESC", (ill_id,)).fetchall()
+    # Search for homilies to link this story to (ones not already linked).
+    find = request.args.get("find", "").strip()
+    matches = []
+    if find:
+        like = f"%{find}%"
+        matches = db.execute(
+            "SELECT id, title, type FROM homilies "
+            "WHERE (title LIKE ? OR liturgical_day LIKE ?) "
+            "AND id NOT IN (SELECT homily_id FROM homily_illustrations "
+            "               WHERE illustration_id = ?) "
+            "ORDER BY title COLLATE NOCASE LIMIT 25", (like, like, ill_id)).fetchall()
     return render_template("illustration_detail.html", ill=ill,
-                           used_in=used_in, told=told)
+                           used_in=used_in, told=told, find=find, matches=matches)
+
+
+@app.route("/illustrations/<int:ill_id>/link", methods=["POST"])
+def illustration_link(ill_id):
+    db = get_db()
+    hid = request.form.get("homily_id")
+    if hid:
+        db.execute("INSERT OR IGNORE INTO homily_illustrations "
+                   "(homily_id, illustration_id) VALUES (?, ?)", (hid, ill_id))
+        db.commit()
+        flash("Story linked to the homily.")
+    return redirect(url_for("illustration_detail", ill_id=ill_id))
+
+
+@app.route("/illustrations/<int:ill_id>/unlink", methods=["POST"])
+def illustration_unlink(ill_id):
+    db = get_db()
+    hid = request.form.get("homily_id")
+    db.execute("DELETE FROM homily_illustrations "
+               "WHERE illustration_id = ? AND homily_id = ?", (ill_id, hid))
+    db.commit()
+    flash("Link removed.")
+    return redirect(url_for("illustration_detail", ill_id=ill_id))
 
 
 @app.route("/illustrations/<int:ill_id>/edit", methods=["POST"])

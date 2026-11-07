@@ -189,6 +189,26 @@ check("baptism button present", b"New baptism" in r.data)
 r = client.get("/funerals")
 check("wedding not in funerals", b"Anna &amp; Ben" not in r.data)
 
+# --- Story links: add and remove directly ------------------------------
+# link the story to the Sunday homily, then unlink it
+_sid = mid.group(1).decode() if mid else "1"
+r = client.get("/illustrations/%s?find=Lost" % _sid)
+check("story detail homily search works", b"Link" in r.data or b"match" in r.data)
+if hid:
+    r = client.post("/illustrations/%s/link" % _sid, data={"homily_id": str(hid)},
+                    follow_redirects=True)
+    check("story linked to a homily", b"Used in" in r.data)
+    r = client.post("/illustrations/%s/unlink" % _sid, data={"homily_id": str(hid)},
+                    follow_redirects=True)
+    check("story unlink works", r.status_code == 200)
+
+# --- Standardize readings -----------------------------------------------
+import load_official_lectionary as _lol  # noqa: E402
+_lol.load_official(db_path=tmp_db.name)
+r = client.post("/standardize-readings", follow_redirects=True)
+check("standardize readings runs", r.status_code == 200
+      and b"official readings" in r.data)
+
 # --- Export -------------------------------------------------------------
 r = client.get("/export")
 check("export page loads", r.status_code == 200 and b"Export to Word" in r.data)

@@ -27,6 +27,18 @@
   <button type="submit">Scan the folders and import new files</button>
 </form>
 
+<div class="standardize">
+  <h2>Standardize the readings</h2>
+  <p class="section-note">Set every Sunday and feast homily's readings to the
+    official assigned readings for its day and cycle — useful after importing new
+    homilies, so they match the lectionary too. {{ standardizable }} homilies can
+    be standardized.</p>
+  <form method="post" action="{{ url_for('standardize_readings') }}"
+        onsubmit="return confirm('Replace the readings on all Sunday/feast homilies with the official lectionary readings? Their text is untouched.');">
+    <button type="submit">Apply official readings to all homilies</button>
+  </form>
+</div>
+
 {% if summary %}
 <div class="import-summary">
   <h2>Last import</h2>

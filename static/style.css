@@ -186,6 +186,12 @@ button.small { padding: 0.3rem 0.6rem; font-size: 0.85rem; white-space: nowrap; 
   border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.6rem; }
 .export-buttons { display: flex; gap: 0.5rem; }
 
+/* Story link rows (link / unlink) */
+.link-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.link-row form { margin: 0; }
+.standardize { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.standardize h2 { font-weight: normal; margin-bottom: 0.3rem; }
+
 /* Backup page */
 .backup-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
   margin: 1.2rem 0 0.4rem; }
