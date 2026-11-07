@@ -164,6 +164,11 @@ button.small { padding: 0.3rem 0.6rem; font-size: 0.85rem; white-space: nowrap; 
   border-radius: 6px; background: var(--bg); color: var(--ink); font: inherit; }
 .from-planner { background: var(--bg); border-radius: 6px; padding: 0.4rem 0.7rem;
   margin: 0.6rem 0 0; font-size: 0.9rem; }
+.plan-readings { display: flex; flex-direction: column; gap: 0.2rem;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.5rem 0.8rem; margin: 0.6rem 0 0; font-size: 0.92rem; }
+.plan-readings-label { color: var(--muted); font-size: 0.82rem; margin-bottom: 0.15rem; }
+.plan-readings-label em { font-style: italic; }
 .lookback { margin-top: 0.8rem; border-top: 1px solid var(--line); padding-top: 0.7rem; }
 .lookback h3 { font-size: 0.95rem; font-weight: normal; color: var(--muted); margin: 0 0 0.5rem; }
 .lookback-list { list-style: none; padding: 0; margin: 0 0 0.7rem; }
@@ -172,6 +177,13 @@ button.small { padding: 0.3rem 0.6rem; font-size: 0.85rem; white-space: nowrap; 
 .lookback-list li.same-cycle { border-left: 3px solid var(--accent); }
 .readings-line { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.85rem; }
 .create-form { margin-top: 0.3rem; }
+
+/* Export page */
+.export-list { list-style: none; padding: 0; margin: 1rem 0; }
+.export-list li { display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.6rem; }
+.export-buttons { display: flex; gap: 0.5rem; }
 
 /* Backup page */
 .backup-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;

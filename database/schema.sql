@@ -82,6 +82,21 @@ CREATE TABLE IF NOT EXISTS occasion_details (
     note        TEXT
 );
 
+-- The Sunday/feast readings table, by cycle year (compiled from the homilies by
+-- build_lectionary.py). Lets the planner show the assigned readings for a day.
+CREATE TABLE IF NOT EXISTS lectionary_readings (
+    signature       TEXT NOT NULL,
+    cycle_year      TEXT NOT NULL,
+    liturgical_day  TEXT,
+    season          TEXT,
+    first_reading   TEXT,
+    psalm           TEXT,
+    second_reading  TEXT,
+    gospel          TEXT,
+    source          TEXT,
+    PRIMARY KEY (signature, cycle_year)
+);
+
 -- Illustration and story bank (specification section 8). Used from Phase 4.
 CREATE TABLE IF NOT EXISTS illustrations (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,

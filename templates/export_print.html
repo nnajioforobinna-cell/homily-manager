@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Homily Manager — {{ label }}</title>
+  <style>
+    body { font-family: Georgia, "Times New Roman", serif; color: #23201c;
+      line-height: 1.6; max-width: 46rem; margin: 2rem auto; padding: 0 1.2rem; }
+    .toolbar { background: #f0ece3; border: 1px solid #ddd; border-radius: 8px;
+      padding: 0.6rem 1rem; margin-bottom: 1.5rem; }
+    .toolbar button { font: inherit; padding: 0.4rem 0.9rem; border-radius: 6px;
+      border: none; background: #6b4f2a; color: #fff; cursor: pointer; }
+    h1.cover { font-size: 2rem; }
+    .homily { page-break-after: always; }
+    .homily:last-child { page-break-after: auto; }
+    .h-title { font-size: 1.4rem; margin: 0 0 0.3rem; }
+    .h-meta { color: #6b665d; font-style: italic; margin: 0 0 0.3rem; }
+    .h-person { margin: 0 0 0.4rem; }
+    .h-readings { font-size: 0.92rem; background: #f6f3ee; border: 1px solid #e2ddd3;
+      border-radius: 6px; padding: 0.5rem 0.8rem; margin: 0.4rem 0 1rem; }
+    .h-readings span { display: block; }
+    .h-body p { margin: 0 0 0.9rem; }
+    .h-body ul { margin: 0 0 0.9rem; }
+    .h-tags { color: #6b665d; font-size: 0.85rem; margin-top: 1rem; }
+    @media print { .toolbar { display: none; } body { margin: 0; max-width: none; } }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="window.print()">Print / Save as PDF</button>
+    &nbsp; Then choose <strong>"Save as PDF"</strong> as the destination.
+  </div>
+
+  <h1 class="cover">Homily Manager — {{ label }}</h1>
+  <p>{{ homilies|length }} homil{{ 'y' if homilies|length == 1 else 'ies' }}</p>
+  <hr>
+
+  {% for h in homilies %}
+  <article class="homily">
+    <h2 class="h-title">{{ h.title }}</h2>
+    <p class="h-meta">
+      {{ h.type }}{% if h.liturgical_day %} · {{ h.liturgical_day }}{% endif %}
+      {% if h.cycle_year %} · Year {{ h.cycle_year }}{% endif %}
+      {% if h.season %} · {{ h.season.replace('_', ' ') }}{% endif %}
+      · {{ h.status }}
+    </p>
+    {% if h.person %}<p class="h-person"><strong>{{ h.person }}</strong></p>{% endif %}
+    {% set any_reading = h.readings.values()|select|list %}
+    {% if any_reading %}
+    <div class="h-readings">
+      {% for role, rlabel in roles %}{% if h.readings.get(role) %}<span><b>{{ rlabel }}:</b> {{ h.readings[role] }}</span>{% endif %}{% endfor %}
+    </div>
+    {% endif %}
+    <div class="h-body">{{ h.body|format_body }}</div>
+    {% if h.tags %}<p class="h-tags">Tags: {{ h.tags|join(', ') }}</p>{% endif %}
+  </article>
+  {% endfor %}
+</body>
+</html>

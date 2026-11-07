@@ -69,6 +69,16 @@ came round three years ago.</p>
     </details>
   </div>
 
+  {% if it.lectionary and (it.lectionary['first_reading'] or it.lectionary['psalm'] or it.lectionary['second_reading'] or it.lectionary['gospel']) %}
+  <div class="plan-readings">
+    <span class="plan-readings-label">Readings for this day <em>(from your homilies — verify)</em></span>
+    {% if it.lectionary['first_reading'] %}<span><b>First:</b> {{ it.lectionary['first_reading'] }}</span>{% endif %}
+    {% if it.lectionary['psalm'] %}<span><b>Psalm:</b> {{ it.lectionary['psalm'] }}</span>{% endif %}
+    {% if it.lectionary['second_reading'] %}<span><b>Second:</b> {{ it.lectionary['second_reading'] }}</span>{% endif %}
+    {% if it.lectionary['gospel'] %}<span><b>Gospel:</b> {{ it.lectionary['gospel'] }}</span>{% endif %}
+  </div>
+  {% endif %}
+
   {% if it.entry and it.entry['homily_id'] %}
     <p class="from-planner">✓ A homily is being prepared for this Sunday —
       <a href="{{ url_for('homily_edit', homily_id=it.entry['homily_id']) }}">open it</a>.</p>

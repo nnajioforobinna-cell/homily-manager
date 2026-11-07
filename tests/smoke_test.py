@@ -189,6 +189,19 @@ check("baptism button present", b"New baptism" in r.data)
 r = client.get("/funerals")
 check("wedding not in funerals", b"Anna &amp; Ben" not in r.data)
 
+# --- Export -------------------------------------------------------------
+r = client.get("/export")
+check("export page loads", r.status_code == 200 and b"Export to Word" in r.data)
+r = client.get("/export/word?scope=all")
+check("Word export is a .docx", r.status_code == 200 and r.data[:2] == b"PK")
+r = client.get("/export/print?scope=all")
+check("print-to-PDF view loads", r.status_code == 200 and b"Save as PDF" in r.data)
+
+# --- Lectionary readings compiled from the homilies ---------------------
+import build_lectionary  # noqa: E402
+bl = build_lectionary.build_from_homilies(db_path=tmp_db.name)
+check("lectionary compiled from homilies", bl["days"] >= 1)
+
 # --- Backup -------------------------------------------------------------
 r = client.get("/backup")
 check("backup page loads", r.status_code == 200 and b"Back up your homilies" in r.data)

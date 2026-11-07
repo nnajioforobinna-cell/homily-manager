@@ -142,6 +142,11 @@ def migrate(conn):
         "CREATE TABLE IF NOT EXISTS occasion_details ("
         "homily_id INTEGER PRIMARY KEY REFERENCES homilies(id) ON DELETE CASCADE, "
         "people TEXT, family TEXT, event_date TEXT, note TEXT)")
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS lectionary_readings ("
+        "signature TEXT NOT NULL, cycle_year TEXT NOT NULL, liturgical_day TEXT, "
+        "season TEXT, first_reading TEXT, psalm TEXT, second_reading TEXT, "
+        "gospel TEXT, source TEXT, PRIMARY KEY (signature, cycle_year))")
 
 
 def tags_for(db, homily_id):
@@ -617,6 +622,81 @@ def backup_save():
     return redirect(url_for("backup"))
 
 
+# --------------------------------------------------------------------------
+# Export everything to Word or PDF
+# --------------------------------------------------------------------------
+EXPORT_SCOPES = {
+    "all": ("All homilies", "h.status != 'archived'"),
+    "library": ("The library",
+                "h.type IN ('sunday','weekday','feast','other') AND h.status != 'archived'"),
+    "funerals": ("Funerals", "h.type = 'funeral'"),
+    "celebrations": ("Weddings & baptisms", "h.type IN ('wedding','baptism')"),
+}
+
+
+def _export_rows(db, scope):
+    label, where = EXPORT_SCOPES.get(scope, EXPORT_SCOPES["all"])
+    rows = db.execute(
+        f"SELECT * FROM homilies h WHERE {where} "
+        "ORDER BY h.type, h.cycle_year, h.liturgical_day, h.title"
+    ).fetchall()
+    out = []
+    for r in rows:
+        person = None
+        if r["type"] == "funeral":
+            fd = funeral_for(db, r["id"])
+            if fd and fd["deceased_name"]:
+                person = fd["deceased_name"]
+                if fd["date_of_funeral"]:
+                    person += f" — funeral {fd['date_of_funeral']}"
+        elif r["type"] in OCCASION_TYPES:
+            od = celebration_for(db, r["id"])
+            if od and od["people"]:
+                person = od["people"]
+                if od["event_date"]:
+                    person += f" — {od['event_date']}"
+        out.append({
+            "id": r["id"], "title": r["title"], "type": r["type"],
+            "liturgical_day": r["liturgical_day"], "season": r["season"],
+            "cycle_year": r["cycle_year"], "status": r["status"],
+            "body": r["body"], "person": person,
+            "readings": readings_for(db, r["id"]),
+            "tags": tags_for(db, r["id"]),
+        })
+    return out, label
+
+
+@app.route("/export")
+def export_page():
+    db = get_db()
+    counts = {k: db.execute(
+        f"SELECT COUNT(*) FROM homilies h WHERE {w}").fetchone()[0]
+        for k, (_lbl, w) in EXPORT_SCOPES.items()}
+    return render_template("export.html", scopes=EXPORT_SCOPES, counts=counts)
+
+
+@app.route("/export/word")
+def export_word():
+    import exporter
+    db = get_db()
+    scope = request.args.get("scope", "all")
+    homilies, label = _export_rows(db, scope)
+    buf = exporter.build_docx(f"Homily Manager — {label}", homilies)
+    stamp = datetime.date.today().isoformat()
+    return send_file(
+        buf, as_attachment=True, download_name=f"homilies-{scope}-{stamp}.docx",
+        mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
+
+@app.route("/export/print")
+def export_print():
+    db = get_db()
+    scope = request.args.get("scope", "all")
+    homilies, label = _export_rows(db, scope)
+    return render_template("export_print.html", homilies=homilies, label=label,
+                           roles=READING_ROLES)
+
+
 @app.route("/celebrations")
 def celebrations():
     db = get_db()
@@ -646,7 +726,17 @@ def import_page():
     if request.method == "POST":
         from importer import run_import
         summary = run_import(db_path=DB_PATH)
-        flash("Import finished. See the summary below.")
+        # refresh the derived data so one button keeps everything current
+        try:
+            import extract_readings
+            import extract_stories
+            import build_lectionary
+            extract_readings.backfill_readings(db_path=DB_PATH)
+            extract_stories.aggregate(db_path=DB_PATH)
+            build_lectionary.build_from_homilies(db_path=DB_PATH)
+        except Exception:
+            pass
+        flash("Import finished. Readings, stories, and the lectionary were refreshed.")
     stats = {
         "total": db.execute("SELECT COUNT(*) FROM homilies").fetchone()[0],
         "flagged": db.execute(
@@ -703,6 +793,9 @@ def planner():
         entries[row["scheduled_date"]] = row
     all_series = db.execute("SELECT * FROM series ORDER BY title").fetchall()
     series_by_id = {s["id"]: s["title"] for s in all_series}
+    lectionary_idx = {
+        (r["signature"], r["cycle_year"]): r
+        for r in db.execute("SELECT * FROM lectionary_readings").fetchall()}
 
     items = []
     for s in sundays:
@@ -713,9 +806,10 @@ def planner():
         past.sort(key=lambda h: (h["cycle_year"] != s["cycle_year"],
                                  h["title"].lower()))
         entry = entries.get(iso)
+        lect = lectionary_idx.get((sig, s["cycle_year"]))
         items.append({
             "info": s, "iso": iso, "weekday": s["date"].strftime("%a %d %b %Y"),
-            "entry": entry, "past": past,
+            "entry": entry, "past": past, "lectionary": lect,
             "series_title": series_by_id.get(entry["series_id"]) if entry else None,
             "same_cycle": [h for h in past if h["cycle_year"] == s["cycle_year"]],
         })
@@ -778,7 +872,20 @@ def planner_create_homily():
         "cycle_year) VALUES ('sunday', ?, 'draft', ?, ?, ?)",
         (day or "Untitled", day, season, cycle))
     homily_id = cur.lastrowid
-    if copy_from:
+
+    # Prefer the compiled readings for this day/cycle; fall back to copying from
+    # the same-cycle homily three years back.
+    sig = lectionary.signature(season, day or "")
+    lect = db.execute(
+        "SELECT * FROM lectionary_readings WHERE signature = ? AND cycle_year = ?",
+        (sig, cycle)).fetchone() if sig else None
+    if lect and any(lect[r] for r in
+                    ("first_reading", "psalm", "second_reading", "gospel")):
+        for role in ("first_reading", "psalm", "second_reading", "gospel"):
+            if lect[role]:
+                db.execute("INSERT INTO readings (homily_id, role, citation) "
+                           "VALUES (?, ?, ?)", (homily_id, role, lect[role]))
+    elif copy_from:
         for r in db.execute(
                 "SELECT role, citation FROM readings WHERE homily_id = ?",
                 (copy_from,)).fetchall():

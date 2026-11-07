@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Export - Homily Manager{% endblock %}
+{% block content %}
+<h1>Export to Word or PDF</h1>
+<p class="section-note">Make a single document of your homilies — to print, to
+keep, or to share. <strong>Word</strong> downloads a <code>.docx</code> you can
+open and edit (and "Save as PDF" from Word). <strong>PDF</strong> opens a clean
+print view — use your browser's Print, then "Save as PDF".</p>
+
+<ul class="export-list">
+  {% for key, (label, _w) in scopes.items() %}
+  <li>
+    <div>
+      <strong>{{ label }}</strong>
+      <div class="meta"><span>{{ counts[key] }} homil{{ 'y' if counts[key] == 1 else 'ies' }}</span></div>
+    </div>
+    <div class="export-buttons">
+      <a class="btn" href="{{ url_for('export_word', scope=key) }}">Word</a>
+      <a class="btn" href="{{ url_for('export_print', scope=key) }}" target="_blank">PDF (print)</a>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+<p class="muted-note">A large export (everything) can take a few seconds and will
+be a long document — that is expected.</p>
+{% endblock %}
