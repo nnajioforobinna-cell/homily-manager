@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Planner - Homily Manager{% endblock %}
+{% block content %}
+<h1>Planner</h1>
+<p class="section-note">The Sundays and feasts ahead, each with its place in the
+Church's year, and — next to it — what you preached the last time that same day
+came round three years ago.</p>
+
+<form class="filters" method="get" action="{{ url_for('planner') }}">
+  <label class="inline-label">Show the next
+    <select name="weeks" onchange="this.form.submit()">
+      {% for w in [8, 12, 16, 26, 52] %}
+        <option value="{{ w }}" {% if weeks == w %}selected{% endif %}>{{ w }} weeks</option>
+      {% endfor %}
+    </select>
+  </label>
+</form>
+
+{% for it in items %}
+{% set s = it.info %}
+<section class="plan-card" id="{{ it.iso }}">
+  <div class="plan-head">
+    <div>
+      <span class="plan-date">{{ it.weekday }}</span>
+      <h2 class="plan-day">{{ s.label }}{% if s.solemnity %} <span class="tag">solemnity</span>{% endif %}</h2>
+      <div class="meta">
+        <span>Year {{ s.cycle_year }}</span>
+        <span>{{ s.season.replace('_', ' ') }}</span>
+        {% if it.entry and it.entry['status'] %}<span class="status">{{ it.entry['status'].replace('_',' ') }}</span>{% endif %}
+        {% if it.entry and it.entry['deadline'] %}<span>draft by {{ it.entry['deadline'] }}</span>{% endif %}
+        {% if it.series_title %}<a class="tag" href="{{ url_for('series_detail', series_id=it.entry['series_id']) }}">{{ it.series_title }}</a>{% endif %}
+      </div>
+      {% if it.entry and it.entry['theme_idea'] %}<p class="core">{{ it.entry['theme_idea'] }}</p>{% endif %}
+    </div>
+    <details class="plan-edit">
+      <summary>{{ 'Edit plan' if it.entry else 'Plan this Sunday' }}</summary>
+      <form method="post" action="{{ url_for('planner_save') }}" class="plan-form">
+        <input type="hidden" name="scheduled_date" value="{{ it.iso }}">
+        <input type="hidden" name="liturgical_day" value="{{ s.label }}">
+        <input type="hidden" name="season" value="{{ s.season }}">
+        <input type="hidden" name="cycle_year" value="{{ s.cycle_year }}">
+        <label>Early idea or theme
+          <input type="text" name="theme_idea"
+                 value="{{ it.entry['theme_idea'] if it.entry and it.entry['theme_idea'] else '' }}">
+        </label>
+        <div class="row">
+          <label>Preparation
+            <select name="status">
+              {% for v, label in statuses %}
+                <option value="{{ v }}" {% if it.entry and it.entry['status'] == v %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Draft by
+            <input type="date" name="deadline"
+                   value="{{ it.entry['deadline'] if it.entry and it.entry['deadline'] else '' }}">
+          </label>
+        </div>
+        <label>Series
+          <select name="series_id">
+            <option value="">— none —</option>
+            {% for ser in all_series %}
+              <option value="{{ ser['id'] }}" {% if it.entry and it.entry['series_id'] == ser['id'] %}selected{% endif %}>{{ ser['title'] }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <button type="submit">Save plan</button>
+      </form>
+    </details>
+  </div>
+
+  {% if it.entry and it.entry['homily_id'] %}
+    <p class="from-planner">✓ A homily is being prepared for this Sunday —
+      <a href="{{ url_for('homily_edit', homily_id=it.entry['homily_id']) }}">open it</a>.</p>
+  {% endif %}
+
+  <div class="lookback">
+    <h3>The last time this came round</h3>
+    {% if it.past %}
+      <ul class="lookback-list">
+        {% for h in it.past[:5] %}
+        <li class="{% if h.cycle_year == s.cycle_year %}same-cycle{% endif %}">
+          <a href="{{ url_for('homily_read', homily_id=h.id) }}">{{ h.title }}</a>
+          <span class="tag">Year {{ h.cycle_year }}{% if h.cycle_year == s.cycle_year %} · same cycle{% endif %}</span>
+          {% if h.core_message %}<p class="core">{{ h.core_message }}</p>{% endif %}
+          {% if h.readings %}
+            <p class="readings-line">{% for role in ['first_reading','psalm','second_reading','gospel'] %}{% if h.readings.get(role) %}{{ h.readings[role] }}{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% if not it.entry or not it.entry['homily_id'] %}
+      <form method="post" action="{{ url_for('planner_create_homily') }}" class="create-form">
+        <input type="hidden" name="scheduled_date" value="{{ it.iso }}">
+        <input type="hidden" name="liturgical_day" value="{{ s.label }}">
+        <input type="hidden" name="season" value="{{ s.season }}">
+        <input type="hidden" name="cycle_year" value="{{ s.cycle_year }}">
+        {% if it.same_cycle %}<input type="hidden" name="copy_readings_from" value="{{ it.same_cycle[0].id }}">{% endif %}
+        <button type="submit" class="btn">Start a homily for this Sunday{% if it.same_cycle %}, with its readings{% endif %}</button>
+      </form>
+      {% endif %}
+    {% else %}
+      <p class="empty">Nothing in the library for this day yet.
+        <form method="post" action="{{ url_for('planner_create_homily') }}" class="create-form">
+          <input type="hidden" name="scheduled_date" value="{{ it.iso }}">
+          <input type="hidden" name="liturgical_day" value="{{ s.label }}">
+          <input type="hidden" name="season" value="{{ s.season }}">
+          <input type="hidden" name="cycle_year" value="{{ s.cycle_year }}">
+          <button type="submit" class="btn">Start a homily for this Sunday</button>
+        </form>
+      </p>
+    {% endif %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

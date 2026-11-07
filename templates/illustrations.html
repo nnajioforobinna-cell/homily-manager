@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Stories - Homily Manager{% endblock %}
+{% block content %}
+<h1>Illustrations &amp; stories</h1>
+<p class="section-note">A story kept in one place, linked to every homily that
+used it — so you can find it again, and never tell the same one to the same
+congregation twice. Add a story to a homily from its "Illustrations / stories
+used" field, or add one here.</p>
+
+<form method="post" action="{{ url_for('illustrations') }}" class="story-form">
+  <input type="text" name="title" placeholder="Short title (e.g. The two wolves)" required>
+  <textarea name="content" rows="3" placeholder="The story itself"></textarea>
+  <input type="text" name="source" placeholder="Source (optional)">
+  <button type="submit">Add story</button>
+</form>
+
+<form class="filters" method="get" action="{{ url_for('illustrations') }}">
+  <input type="search" name="q" placeholder="Search stories" value="{{ q }}">
+  <button type="submit">Search</button>
+  <a class="clear" href="{{ url_for('illustrations') }}">Clear</a>
+</form>
+
+{% if illustrations %}
+<ul class="homily-list">
+  {% for i in illustrations %}
+  <li>
+    <a class="homily-title" href="{{ url_for('illustration_detail', ill_id=i['id']) }}">{{ i['title'] }}</a>
+    <div class="meta">
+      <span>used in {{ i['uses'] }} homil{{ 'y' if i['uses'] == 1 else 'ies' }}</span>
+      {% if i['source'] %}<span>{{ i['source'] }}</span>{% endif %}
+    </div>
+    {% if i['content'] %}<p class="core">{{ i['content'][:160] }}{% if i['content']|length > 160 %}…{% endif %}</p>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No stories yet.</p>
+{% endif %}
+{% endblock %}

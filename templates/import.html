@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Import - Homily Manager{% endblock %}
+{% block content %}
+<h1>Import your existing homilies</h1>
+<p class="section-note">
+  This reads the six year folders and the FUNERAL HOMILIES folder that sit next
+  to the app, and adds any homily not already in your library. It fills in the
+  cycle year, the liturgical day, and the funeral date and name from the folder
+  and file names, and pulls in the text of each homily. Nothing is thrown away:
+  anything it is unsure about is brought in and marked <strong>⚑ review</strong>
+  so you can confirm it by hand. Running it again only adds files that are new.
+</p>
+
+<div class="stat-cards">
+  <div class="stat"><span class="n">{{ stats.total }}</span> in your library</div>
+  <div class="stat"><span class="n">{{ stats.flagged }}</span> flagged for review</div>
+  <div class="stat"><span class="n">{{ stats.no_text }}</span> with no text read</div>
+</div>
+
+{% if by_type %}
+<p class="count">
+  {% for row in by_type %}{{ row['n'] }} {{ row['type'] }}{% if not loop.last %} · {% endif %}{% endfor %}
+</p>
+{% endif %}
+
+<form method="post" action="{{ url_for('import_page') }}">
+  <button type="submit">Scan the folders and import new files</button>
+</form>
+
+{% if summary %}
+<div class="import-summary">
+  <h2>Last import</h2>
+  <ul>
+    <li>Looked at {{ summary.total_seen }} files.</li>
+    <li>Sunday: {{ summary.sunday }} · Weekday: {{ summary.weekday }} ·
+        Feast/solemnity: {{ summary.feast }} · Funeral: {{ summary.funeral }} ·
+        Wedding: {{ summary.wedding }}</li>
+    <li>Already imported, skipped: {{ summary.skipped_existing }}</li>
+    <li>Flagged for your review: {{ summary.flagged }}</li>
+    <li>Text could not be read (flagged): {{ summary.unreadable }}</li>
+    {% if summary.errors %}<li>Errors: {{ summary.errors|length }}</li>{% endif %}
+  </ul>
+  <p>Review the flagged homilies in the
+    <a href="{{ url_for('index') }}?">Library</a> and the
+    <a href="{{ url_for('funerals', flagged='1') }}">Funerals</a> section.</p>
+</div>
+{% endif %}
+{% endblock %}

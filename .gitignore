@@ -1,0 +1,6 @@
+# The private Python setup and the database are personal to your mac.
+.venv/
+__pycache__/
+*.db
+database/homilies.db
+.DS_Store

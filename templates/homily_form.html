@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit homily' if homily else 'New homily' }} - Homily Manager{% endblock %}
+{% block content %}
+<h1>{{ 'Edit homily' if homily else 'New homily' }}</h1>
+
+{% if homily and homily['import_note'] %}
+<div class="review-flag">
+  <div>
+    <strong>Needs a quick look.</strong>
+    <p>{{ homily['import_note'] }}</p>
+    {% if homily['source_file'] %}<p class="src">From: {{ homily['source_file'] }}</p>{% endif %}
+  </div>
+  <form method="post" action="{{ url_for('homily_clear_flag', homily_id=homily['id']) }}">
+    <button type="submit" class="small">Looks right — clear</button>
+  </form>
+</div>
+{% endif %}
+
+<form method="post" class="homily-form">
+  <label>Title
+    <input type="text" name="title" value="{{ homily['title'] if homily else '' }}" required>
+  </label>
+
+  <div class="row">
+    <label>Type
+      <select name="type" id="type-select">
+        {% for v, label in types %}
+          <option value="{{ v }}" {% if (homily and homily['type'] == v) or (not homily and default_type == v) %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Status
+      <select name="status">
+        {% for v, label in statuses %}
+          <option value="{{ v }}" {% if homily and homily['status'] == v %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </div>
+
+  <div class="row">
+    <label>Liturgical day
+      <input type="text" name="liturgical_day" placeholder="e.g. 3rd Sunday of Advent"
+             value="{{ homily['liturgical_day'] if homily and homily['liturgical_day'] else '' }}">
+    </label>
+    <label>Season
+      <select name="season">
+        <option value="">—</option>
+        {% for v, label in seasons %}
+          <option value="{{ v }}" {% if homily and homily['season'] == v %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Lectionary year
+      <select name="cycle_year">
+        <option value="">—</option>
+        {% for v, label in cycle_years %}
+          <option value="{{ v }}" {% if homily and homily['cycle_year'] == v %}selected{% endif %}>Year {{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </div>
+
+  <label>Core message (the one thing to carry home)
+    <input type="text" name="core_message"
+           value="{{ homily['core_message'] if homily and homily['core_message'] else '' }}">
+  </label>
+
+  <fieldset id="funeral-fields">
+    <legend>The person (funeral)</legend>
+    <div class="row">
+      <label>Name of the deceased
+        <input type="text" name="deceased_name"
+               value="{{ funeral['deceased_name'] if funeral and funeral['deceased_name'] else '' }}">
+      </label>
+      <label>Age
+        <input type="number" name="age" min="0" max="120"
+               value="{{ funeral['age'] if funeral and funeral['age'] is not none else '' }}">
+      </label>
+    </div>
+    <div class="row">
+      <label>Date of death
+        <input type="date" name="date_of_death"
+               value="{{ funeral['date_of_death'] if funeral and funeral['date_of_death'] else '' }}">
+      </label>
+      <label>Date of the funeral Mass
+        <input type="date" name="date_of_funeral"
+               value="{{ funeral['date_of_funeral'] if funeral and funeral['date_of_funeral'] else '' }}">
+      </label>
+    </div>
+    <label>About the person (who they were, their place in the parish)
+      <textarea name="about_person" rows="3">{{ funeral['about_person'] if funeral and funeral['about_person'] else '' }}</textarea>
+    </label>
+    <label>Family or chief mourner you dealt with
+      <input type="text" name="family_contact"
+             value="{{ funeral['family_contact'] if funeral and funeral['family_contact'] else '' }}">
+    </label>
+  </fieldset>
+
+  <fieldset id="occasion-fields">
+    <legend id="occasion-legend">The celebration</legend>
+    <div class="row">
+      <label><span class="occ-people-label">The couple or child</span>
+        <input type="text" name="people"
+               value="{{ celebration['people'] if celebration and celebration['people'] else '' }}">
+      </label>
+      <label><span class="occ-date-label">Date</span>
+        <input type="date" name="event_date"
+               value="{{ celebration['event_date'] if celebration and celebration['event_date'] else '' }}">
+      </label>
+    </div>
+    <label><span class="occ-family-label">Family (parents, godparents, families)</span>
+      <input type="text" name="family"
+             value="{{ celebration['family'] if celebration and celebration['family'] else '' }}">
+    </label>
+    <label>Note
+      <input type="text" name="celebration_note"
+             value="{{ celebration['note'] if celebration and celebration['note'] else '' }}">
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Readings</legend>
+    {% for role, label in roles %}
+      <label class="reading">{{ label }}
+        <input type="text" name="reading_{{ role }}" placeholder="e.g. Luke 15:1-32"
+               value="{{ readings.get(role, '') }}">
+      </label>
+    {% endfor %}
+  </fieldset>
+
+  <label>Homily text or notes
+    <textarea name="body" rows="16">{{ homily['body'] if homily and homily['body'] else '' }}</textarea>
+  </label>
+
+  <label>Theme tags (separated by commas)
+    <input type="text" name="tags" value="{{ tags }}" placeholder="mercy, forgiveness, hope">
+  </label>
+
+  <label>Illustrations / stories used (separated by commas)
+    <input type="text" name="illustrations" value="{{ illustrations }}"
+           placeholder="The two wolves, O. Henry's Gift of the Magi">
+  </label>
+
+  <fieldset>
+    <legend>Preached at</legend>
+    <div class="row">
+      <label>Congregation
+        <select name="congregation_id">
+          <option value="">—</option>
+          {% for c in congregations %}
+            <option value="{{ c['id'] }}"
+              {% if occasion and occasion['congregation_id'] == c['id'] %}selected{% endif %}>{{ c['name'] }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Date preached
+        <input type="date" name="date_preached"
+               value="{{ occasion['date_preached'] if occasion and occasion['date_preached'] else '' }}">
+      </label>
+    </div>
+    <label>Notes for this occasion
+      <input type="text" name="occasion_notes"
+             value="{{ occasion['notes'] if occasion and occasion['notes'] else '' }}">
+    </label>
+  </fieldset>
+
+  <label>Recording link (optional)
+    <input type="url" name="recording_url"
+           value="{{ homily['recording_url'] if homily and homily['recording_url'] else '' }}">
+  </label>
+
+  <div class="form-actions">
+    <button type="submit">Save</button>
+    {% if homily %}<a class="clear" href="{{ url_for('homily_read', homily_id=homily['id']) }}">View</a>{% endif %}
+    <a class="clear" href="{{ url_for('index') }}">Back to library</a>
+  </div>
+</form>
+
+{% if homily %}
+<form method="post" action="{{ url_for('homily_delete', homily_id=homily['id']) }}"
+      class="delete-form" onsubmit="return confirm('Delete this homily? This cannot be undone.');">
+  <button type="submit" class="danger">Delete this homily</button>
+</form>
+{% endif %}
+
+<script>
+  // Show the funeral fields only for a funeral, and the wedding/baptism fields
+  // only for those, with labels that fit the occasion.
+  (function () {
+    var sel = document.getElementById('type-select');
+    var funeral = document.getElementById('funeral-fields');
+    var occasion = document.getElementById('occasion-fields');
+    var legend = document.getElementById('occasion-legend');
+    var peopleL = document.querySelector('.occ-people-label');
+    var dateL = document.querySelector('.occ-date-label');
+    var familyL = document.querySelector('.occ-family-label');
+    function sync() {
+      var v = sel.value;
+      funeral.style.display = v === 'funeral' ? '' : 'none';
+      var isOcc = v === 'wedding' || v === 'baptism';
+      occasion.style.display = isOcc ? '' : 'none';
+      if (v === 'wedding') {
+        legend.textContent = 'The wedding';
+        peopleL.textContent = 'The couple';
+        dateL.textContent = 'Date of the wedding';
+        familyL.textContent = 'Families';
+      } else if (v === 'baptism') {
+        legend.textContent = 'The baptism';
+        peopleL.textContent = 'The child';
+        dateL.textContent = 'Date of the baptism';
+        familyL.textContent = 'Parents and godparents';
+      }
+    }
+    sel.addEventListener('change', sync);
+    sync();
+  })();
+</script>
+{% endblock %}

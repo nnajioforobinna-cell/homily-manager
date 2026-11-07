@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ series['title'] }} - Series - Homily Manager{% endblock %}
+{% block content %}
+<p><a class="back" href="{{ url_for('series_list') }}">&larr; All series</a></p>
+<h1>{{ series['title'] }}</h1>
+{% if series['description'] %}<p class="section-note">{{ series['description'] }}</p>{% endif %}
+
+{% if weeks %}
+<ol class="series-weeks">
+  {% for w in weeks %}
+  <li>
+    <div class="meta">
+      <span class="plan-date">{{ w['scheduled_date'] }}</span>
+      {% if w['liturgical_day'] %}<span>{{ w['liturgical_day'] }}</span>{% endif %}
+      {% if w['status'] %}<span class="status">{{ w['status'].replace('_',' ') }}</span>{% endif %}
+    </div>
+    {% if w['theme_idea'] %}<p class="series-theme">{{ w['theme_idea'] }}</p>{% endif %}
+    {% if w['homily_id'] %}
+      <a href="{{ url_for('homily_read', homily_id=w['homily_id']) }}">{{ w['homily_title'] }} &rarr;</a>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ol>
+{% else %}
+<p class="empty">No weeks assigned yet. Open the
+  <a href="{{ url_for('planner') }}">Planner</a>, plan a Sunday, and choose this
+  series.</p>
+{% endif %}
+{% endblock %}

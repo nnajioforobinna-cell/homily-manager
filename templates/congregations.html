@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Congregations - Homily Manager{% endblock %}
+{% block content %}
+<h1>Congregations</h1>
+<p>The churches you serve. Each homily can be tied to the congregation it was preached to.</p>
+
+<form method="post" class="inline-form">
+  <input type="text" name="name" placeholder="Congregation name" required>
+  <input type="text" name="notes" placeholder="Notes (optional)">
+  <button type="submit">Add</button>
+</form>
+
+{% if congregations %}
+<ul class="cong-list">
+  {% for c in congregations %}
+  <li>
+    <span>{{ c['name'] }}{% if c['notes'] %} <small>— {{ c['notes'] }}</small>{% endif %}</span>
+    <form method="post" action="{{ url_for('congregation_delete', cong_id=c['id']) }}"
+          onsubmit="return confirm('Remove this congregation?');">
+      <button type="submit" class="link-danger">Remove</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No congregations yet. Add your parish above.</p>
+{% endif %}
+{% endblock %}

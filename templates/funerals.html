@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Funerals - Homily Manager{% endblock %}
+{% block content %}
+<h1>Funerals</h1>
+<p class="section-note">A pastoral record, anchored to each person and kept apart
+from the general library.</p>
+
+<form class="filters" method="get" action="{{ url_for('funerals') }}">
+  <input type="search" name="q" placeholder="Search by name or text" value="{{ q }}">
+  <label class="checkbox">
+    <input type="checkbox" name="flagged" value="1" {% if only_flagged %}checked{% endif %}
+           onchange="this.form.submit()">
+    Needs review only
+  </label>
+  <button type="submit">Search</button>
+  <a class="clear" href="{{ url_for('funerals') }}">Clear</a>
+  <a class="btn" href="{{ url_for('homily_new', type='funeral') }}">+ New funeral</a>
+</form>
+
+<p class="count">
+  {{ total }} funeral{{ '' if total == 1 else 's' }}
+  {% if flagged_total %}· <a href="{{ url_for('funerals', flagged='1') }}">{{ flagged_total }} need a look</a>{% endif %}
+</p>
+
+{% if funerals %}
+<ul class="homily-list">
+  {% for h in funerals %}
+  <li>
+    <a class="homily-title" href="{{ url_for('homily_read', homily_id=h['id']) }}">
+      {{ h['deceased_name'] or h['title'] }}</a>
+    <div class="meta">
+      {% if h['date_of_funeral'] %}<span>Funeral {{ h['date_of_funeral'] }}</span>{% endif %}
+      {% if h['age'] is not none %}<span>Age {{ h['age'] }}</span>{% endif %}
+      <span class="status">{{ h['status'] }}</span>
+      {% if h['import_note'] %}<span class="flag" title="{{ h['import_note'] }}">⚑ review</span>{% endif %}
+    </div>
+    {% if h['about_person'] %}<p class="core">{{ h['about_person'] }}</p>{% endif %}
+    {% if not h['deceased_name'] %}<p class="core muted-note">No name read from the file — open to add it.</p>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No funeral homilies yet. Use <a href="{{ url_for('homily_new', type='funeral') }}">+ New funeral</a>,
+or import your existing folder from the <a href="{{ url_for('import_page') }}">Import</a> page.</p>
+{% endif %}
+{% endblock %}

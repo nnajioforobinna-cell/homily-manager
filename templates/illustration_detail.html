@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ ill['title'] }} - Stories - Homily Manager{% endblock %}
+{% block content %}
+<p><a class="back" href="{{ url_for('illustrations') }}">&larr; All stories</a></p>
+<h1>{{ ill['title'] }}</h1>
+
+{% if ill['content'] %}<div class="reading-body"><p>{{ ill['content'] }}</p></div>{% endif %}
+{% if ill['source'] %}<p class="muted-note">Source: {{ ill['source'] }}</p>{% endif %}
+
+<h3>Where it has been told</h3>
+{% if told %}
+<ul class="told-list">
+  {% for t in told %}
+  <li>
+    <strong>{{ t['congregation'] or 'Congregation not recorded' }}</strong>
+    {% if t['date_preached'] %}· {{ t['date_preached'] }}{% endif %}
+    · <a href="{{ url_for('homily_read', homily_id=t['homily_id']) }}">{{ t['homily_title'] }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">Not yet recorded as told anywhere with a date and congregation.</p>
+{% endif %}
+
+{% if used_in %}
+<h3>Used in</h3>
+<ul class="homily-list">
+  {% for h in used_in %}
+  <li><a class="homily-title" href="{{ url_for('homily_read', homily_id=h['id']) }}">{{ h['title'] }}</a>
+    <span class="tag type">{{ h['type'] }}</span></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<details class="plan-edit">
+  <summary>Edit this story</summary>
+  <form method="post" action="{{ url_for('illustration_edit', ill_id=ill['id']) }}" class="story-form">
+    <input type="text" name="title" value="{{ ill['title'] }}" required>
+    <textarea name="content" rows="4" placeholder="The story itself">{{ ill['content'] or '' }}</textarea>
+    <input type="text" name="source" value="{{ ill['source'] or '' }}" placeholder="Source (optional)">
+    <button type="submit">Save</button>
+  </form>
+  <form method="post" action="{{ url_for('illustration_delete', ill_id=ill['id']) }}"
+        class="delete-form" onsubmit="return confirm('Remove this story? The homilies that used it are kept.');">
+    <button type="submit" class="danger">Delete this story</button>
+  </form>
+</details>
+{% endblock %}

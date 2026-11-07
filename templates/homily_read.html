@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{{ homily['title'] }} - Homily Manager{% endblock %}
+{% block content %}
+<article class="reading">
+  <div class="reading-top">
+    <a class="back" href="{{ url_for('funerals') if homily['type'] == 'funeral' else url_for('index') }}">&larr; Back</a>
+    <a class="btn" href="{{ url_for('homily_edit', homily_id=homily['id']) }}">Edit</a>
+  </div>
+
+  <h1 class="reading-title">{{ homily['title'] }}</h1>
+
+  <div class="meta reading-meta">
+    <span class="tag type">{{ homily['type'] }}</span>
+    {% if homily['liturgical_day'] %}<span>{{ homily['liturgical_day'] }}</span>{% endif %}
+    {% if homily['cycle_year'] %}<span>Year {{ homily['cycle_year'] }}</span>{% endif %}
+    {% if homily['season'] %}<span>{{ homily['season'].replace('_', ' ') }}</span>{% endif %}
+    <span class="status">{{ homily['status'] }}</span>
+    {% if occasion and occasion['date_preached'] %}<span>{{ occasion['date_preached'] }}</span>{% endif %}
+    {% if congregation %}<span>{{ congregation['name'] }}</span>{% endif %}
+  </div>
+
+  {% if homily['core_message'] %}
+    <p class="reading-core">{{ homily['core_message'] }}</p>
+  {% endif %}
+
+  {% if funeral and (funeral['deceased_name'] or funeral['date_of_funeral']) %}
+  <div class="reading-funeral">
+    {% if funeral['deceased_name'] %}<strong>{{ funeral['deceased_name'] }}</strong>{% endif %}
+    {% if funeral['age'] is not none %} · age {{ funeral['age'] }}{% endif %}
+    {% if funeral['date_of_funeral'] %} · funeral {{ funeral['date_of_funeral'] }}{% endif %}
+    {% if funeral['date_of_death'] %} · died {{ funeral['date_of_death'] }}{% endif %}
+    {% if funeral['about_person'] %}<p>{{ funeral['about_person'] }}</p>{% endif %}
+    {% if funeral['family_contact'] %}<p class="muted-note">Family: {{ funeral['family_contact'] }}</p>{% endif %}
+  </div>
+  {% endif %}
+
+  {% if celebration and (celebration['people'] or celebration['event_date']) %}
+  <div class="reading-funeral">
+    {% if celebration['people'] %}<strong>{{ celebration['people'] }}</strong>{% endif %}
+    {% if celebration['event_date'] %} · {{ celebration['event_date'] }}{% endif %}
+    {% if celebration['family'] %}<p>{{ celebration['family'] }}</p>{% endif %}
+    {% if celebration['note'] %}<p class="muted-note">{{ celebration['note'] }}</p>{% endif %}
+  </div>
+  {% endif %}
+
+  {% set any_reading = readings.values()|select|list %}
+  {% if any_reading %}
+  <div class="reading-scripture">
+    {% for role, label in roles %}
+      {% if readings.get(role) %}<span><b>{{ label }}:</b> {{ readings[role] }}</span>{% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if homily['body'] %}
+    <div class="reading-body">{{ homily['body']|format_body }}</div>
+  {% else %}
+    <p class="empty">No text yet. <a href="{{ url_for('homily_edit', homily_id=homily['id']) }}">Add it</a>.</p>
+  {% endif %}
+
+  {% if illustrations %}
+    <div class="meta reading-tags">Stories:
+      {% for i in illustrations %}<a class="tag" href="{{ url_for('illustration_detail', ill_id=i['id']) }}">{{ i['title'] }}</a>{% endfor %}
+    </div>
+  {% endif %}
+
+  {% if tags %}
+    <div class="meta reading-tags">{% for t in tags %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+  {% endif %}
+
+  {% if homily['recording_url'] %}
+    <p><a href="{{ homily['recording_url'] }}">Recording &rarr;</a></p>
+  {% endif %}
+</article>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Celebrations - Homily Manager{% endblock %}
+{% block content %}
+<h1>Weddings &amp; baptisms</h1>
+<p class="section-note">The lighter occasional homilies — the couple or the
+child, the family, and the date.</p>
+
+<form class="filters" method="get" action="{{ url_for('celebrations') }}">
+  <input type="search" name="q" placeholder="Search by name or text" value="{{ q }}">
+  <button type="submit">Search</button>
+  <a class="clear" href="{{ url_for('celebrations') }}">Clear</a>
+  <a class="btn" href="{{ url_for('homily_new', type='wedding') }}">+ New wedding</a>
+  <a class="btn" href="{{ url_for('homily_new', type='baptism') }}">+ New baptism</a>
+</form>
+
+<p class="count">{{ total }} celebration{{ '' if total == 1 else 's' }}</p>
+
+{% if celebrations %}
+<ul class="homily-list">
+  {% for h in celebrations %}
+  <li>
+    <a class="homily-title" href="{{ url_for('homily_read', homily_id=h['id']) }}">
+      {{ h['people'] or h['title'] }}</a>
+    <div class="meta">
+      <span class="tag type">{{ h['type'] }}</span>
+      {% if h['event_date'] %}<span>{{ h['event_date'] }}</span>{% endif %}
+      {% if h['family'] %}<span>{{ h['family'] }}</span>{% endif %}
+      <span class="status">{{ h['status'] }}</span>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No weddings or baptisms yet. Use <a href="{{ url_for('homily_new', type='wedding') }}">+ New wedding</a>
+or <a href="{{ url_for('homily_new', type='baptism') }}">+ New baptism</a>.</p>
+{% endif %}
+{% endblock %}

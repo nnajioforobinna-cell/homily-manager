@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Library</h1>
+
+<form class="filters" method="get" action="{{ url_for('index') }}">
+  <input type="search" name="q" placeholder="Search title and text"
+         value="{{ filters.get('q', '') }}">
+  <input type="text" name="passage" placeholder="Scripture passage"
+         value="{{ filters.get('passage', '') }}">
+  <input type="text" name="liturgical_day" placeholder="Liturgical day"
+         value="{{ filters.get('liturgical_day', '') }}">
+
+  <select name="type">
+    <option value="">Any type</option>
+    {% for v, label in types %}
+      <option value="{{ v }}" {% if filters.get('type') == v %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="season">
+    <option value="">Any season</option>
+    {% for v, label in seasons %}
+      <option value="{{ v }}" {% if filters.get('season') == v %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="cycle_year">
+    <option value="">Any year</option>
+    {% for v, label in cycle_years %}
+      <option value="{{ v }}" {% if filters.get('cycle_year') == v %}selected{% endif %}>Year {{ label }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="text" name="tag" placeholder="Theme tag" list="taglist"
+         value="{{ filters.get('tag', '') }}">
+  <datalist id="taglist">
+    {% for t in all_tags %}<option value="{{ t }}">{% endfor %}
+  </datalist>
+
+  <select name="congregation_id">
+    <option value="">Any congregation</option>
+    {% for c in congregations %}
+      <option value="{{ c['id'] }}" {% if filters.get('congregation_id') == c['id']|string %}selected{% endif %}>{{ c['name'] }}</option>
+    {% endfor %}
+  </select>
+
+  <label class="checkbox">
+    <input type="checkbox" name="review" value="1" {% if filters.get('review') == '1' %}checked{% endif %}>
+    Needs review only
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="show_archived" value="1" {% if filters.get('show_archived') == '1' %}checked{% endif %}>
+    Show archived
+  </label>
+
+  <button type="submit">Filter</button>
+  <a class="clear" href="{{ url_for('index') }}">Clear</a>
+</form>
+
+<p class="count">
+  {{ total }} homil{{ 'y' if total == 1 else 'ies' }}
+  {% if review_total and filters.get('review') != '1' %}
+    · <a href="{{ url_for('index', review='1') }}">{{ review_total }} need a look</a>
+  {% endif %}
+  {% if archived_total and filters.get('show_archived') != '1' %}
+    · <span class="muted-note">{{ archived_total }} archived hidden</span>
+  {% endif %}
+</p>
+
+{% if homilies %}
+<ul class="homily-list">
+  {% for h in homilies %}
+  <li>
+    <a class="homily-title" href="{{ url_for('homily_read', homily_id=h['id']) }}">
+      {{ h['title'] }}</a>
+    <div class="meta">
+      <span class="tag type">{{ h['type'] }}</span>
+      {% if h['liturgical_day'] %}<span>{{ h['liturgical_day'] }}</span>{% endif %}
+      {% if h['cycle_year'] %}<span>Year {{ h['cycle_year'] }}</span>{% endif %}
+      {% if h['season'] %}<span>{{ h['season'].replace('_', ' ') }}</span>{% endif %}
+      <span class="status">{{ h['status'] }}</span>
+      {% if h['import_note'] %}<span class="flag" title="{{ h['import_note'] }}">⚑ review</span>{% endif %}
+    </div>
+    {% if h['core_message'] %}<p class="core">{{ h['core_message'] }}</p>{% endif %}
+    {% if h['tags'] %}
+      <div class="meta">{% for t in h['tags'] %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No homilies yet. Use <a href="{{ url_for('homily_new') }}">+ New homily</a> to add one,
+or we can import your existing folders.</p>
+{% endif %}
+{% endblock %}

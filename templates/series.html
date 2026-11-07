@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Series - Homily Manager{% endblock %}
+{% block content %}
+<h1>Series</h1>
+<p class="section-note">Group several Sundays under one theme — a stretch on the
+sacraments or the beatitudes, say — and plan them as a whole. Assign a Sunday to
+a series from the <a href="{{ url_for('planner') }}">Planner</a>.</p>
+
+<form method="post" action="{{ url_for('series_list') }}" class="inline-form">
+  <input type="text" name="title" placeholder="Series title (e.g. The Beatitudes)" required>
+  <input type="text" name="description" placeholder="A note on the series (optional)">
+  <button type="submit">Add series</button>
+</form>
+
+{% if series %}
+<ul class="cong-list">
+  {% for s in series %}
+  <li>
+    <div>
+      <a class="homily-title" href="{{ url_for('series_detail', series_id=s['id']) }}">{{ s['title'] }}</a>
+      <div class="meta">
+        <span>{{ s['weeks'] }} week{{ '' if s['weeks'] == 1 else 's' }}</span>
+        {% if s['description'] %}<span>{{ s['description'] }}</span>{% endif %}
+      </div>
+    </div>
+    <form method="post" action="{{ url_for('series_delete', series_id=s['id']) }}"
+          onsubmit="return confirm('Remove this series? Its weeks stay in the planner.');">
+      <button type="submit" class="link-danger">Remove</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">No series yet. Add one above, then assign Sundays to it from the planner.</p>
+{% endif %}
+{% endblock %}

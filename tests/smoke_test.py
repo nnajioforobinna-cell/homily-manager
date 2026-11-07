@@ -1,0 +1,205 @@
+"""
+A small end-to-end check of Phase 1. It uses a throwaway database, so it never
+touches your real homilies. Run it from the app folder with:
+
+    python3 tests/smoke_test.py
+
+It prints OK and exits 0 when everything works.
+"""
+
+import os
+import sys
+import tempfile
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
+
+# Point the app at a temporary database before importing it
+tmp_db = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+tmp_db.close()
+os.environ["HOMILY_DB"] = tmp_db.name
+
+import server  # noqa: E402
+
+server.init_db()
+server.DB_PATH = tmp_db.name
+client = server.app.test_client()
+
+failures = []
+
+
+def check(name, condition):
+    print(("PASS" if condition else "FAIL") + "  " + name)
+    if not condition:
+        failures.append(name)
+
+
+# Empty library loads
+r = client.get("/")
+check("home page loads", r.status_code == 200)
+
+# Add a congregation
+r = client.post("/congregations", data={"name": "Star of the Sea"},
+                follow_redirects=True)
+check("congregation added", b"Star of the Sea" in r.data)
+
+# Add a homily with a reading and a tag
+r = client.post("/homily/new", data={
+    "type": "sunday", "title": "The Lost Sheep", "status": "preached",
+    "liturgical_day": "24th Sunday Ordinary Time", "season": "ordinary_time",
+    "cycle_year": "C", "core_message": "God seeks the one who is lost.",
+    "reading_gospel": "Luke 15:1-32", "body": "Full homily text here.",
+    "tags": "mercy, forgiveness",
+}, follow_redirects=True)
+check("homily saved", r.status_code == 200)
+
+# It appears in the library
+r = client.get("/")
+check("homily listed", b"The Lost Sheep" in r.data)
+
+# Search by text
+r = client.get("/?q=lost")
+check("text search finds it", b"The Lost Sheep" in r.data)
+
+# Filter by scripture passage
+r = client.get("/?passage=Luke 15")
+check("passage filter finds it", b"The Lost Sheep" in r.data)
+
+# Filter by tag
+r = client.get("/?tag=mercy")
+check("tag filter finds it", b"The Lost Sheep" in r.data)
+
+# Filter by cycle year that should NOT match
+r = client.get("/?cycle_year=A")
+check("wrong-year filter excludes it", b"The Lost Sheep" not in r.data)
+
+# --- Phase 2: the funeral section ---------------------------------------
+# Add a funeral homily with its person details
+r = client.post("/homily/new", data={
+    "type": "funeral", "title": "Funeral of Mary Example", "status": "preached",
+    "deceased_name": "Mary Example", "age": "84",
+    "date_of_funeral": "2024-05-02", "date_of_death": "2024-04-28",
+    "about_person": "A pillar of the parish choir.",
+    "family_contact": "Her son John", "body": "Funeral homily text.",
+}, follow_redirects=True)
+check("funeral saved", r.status_code == 200)
+check("funeral details kept", b"Mary Example" in r.data and b"84" in r.data)
+
+# It shows in the funeral section...
+r = client.get("/funerals")
+check("funeral listed in its section", b"Mary Example" in r.data)
+
+# ...but NOT in the general library
+r = client.get("/")
+check("funeral kept out of the library", b"Mary Example" not in r.data)
+
+# The library still has the Sunday homily
+check("library still shows sunday homily", b"The Lost Sheep" in r.data)
+
+# The import page loads
+r = client.get("/import")
+check("import page loads", r.status_code == 200)
+
+# --- Phase 3: the planner and the three-year lookup ---------------------
+# A past Year A homily so the lookup has something to find
+client.post("/homily/new", data={
+    "type": "sunday", "title": "28th Sunday Year A (2023)", "status": "preached",
+    "liturgical_day": "28th Sunday in Ordinary Time", "season": "ordinary_time",
+    "cycle_year": "A", "reading_gospel": "Matthew 22:1-14",
+    "body": "The wedding feast.",
+}, follow_redirects=True)
+
+r = client.get("/planner")
+check("planner loads", r.status_code == 200)
+check("planner shows upcoming Sundays", b"Sunday" in r.data)
+# a 52-week window always contains every Sunday of the cycle, so the 28th
+# Sunday appears and the lookup lists the past homily for it (whatever today is)
+r = client.get("/planner?weeks=52")
+check("three-year lookup finds the past homily",
+      b"28th Sunday Year A (2023)" in r.data)
+
+# Plan a Sunday
+r = client.post("/planner/save", data={
+    "scheduled_date": "2099-10-11", "liturgical_day": "28th Sunday in Ordinary Time",
+    "season": "ordinary_time", "cycle_year": "A",
+    "theme_idea": "Come to the feast", "status": "researching",
+}, follow_redirects=True)
+check("planner entry saved", b"Come to the feast" in r.data or r.status_code == 200)
+
+# Turn a planner Sunday into a library homily
+r = client.post("/planner/create-homily", data={
+    "scheduled_date": "2099-10-11", "liturgical_day": "28th Sunday in Ordinary Time",
+    "season": "ordinary_time", "cycle_year": "A",
+}, follow_redirects=True)
+check("planner created a homily", r.status_code == 200
+      and b"28th Sunday in Ordinary Time" in r.data)
+
+# --- Phase 3: series ----------------------------------------------------
+client.post("/series", data={"title": "The Beatitudes",
+            "description": "Eight weeks"}, follow_redirects=True)
+r = client.get("/series")
+check("series listed", b"The Beatitudes" in r.data)
+# assign a planned Sunday to the series and confirm it shows on the detail
+r = client.post("/planner/save", data={
+    "scheduled_date": "2099-01-04", "liturgical_day": "2nd Sunday after Christmas",
+    "season": "christmas", "cycle_year": "A", "theme_idea": "Poor in spirit",
+    "status": "researching", "series_id": "1"}, follow_redirects=True)
+r = client.get("/series/1")
+check("series detail shows its week",
+      b"Poor in spirit" in r.data or b"2nd Sunday" in r.data)
+
+# --- Phase 4: illustration / story bank ---------------------------------
+# attach a story to the earlier Sunday homily, with an occasion, by editing it
+hid = None
+import re as _re2  # noqa: E402
+m = _re2.search(rb'/homily/(\d+)/read"[^>]*>\s*The Lost Sheep', client.get("/").data)
+# fall back: find any homily id from the library
+r = client.get("/")
+mm = _re2.search(rb'/homily/(\d+)', r.data)
+hid = int(mm.group(1)) if mm else None
+if hid:
+    client.post(f"/homily/{hid}", data={
+        "type": "sunday", "title": "The Lost Sheep", "status": "preached",
+        "illustrations": "The two wolves, Gift of the Magi",
+        "congregation_id": "1", "date_preached": "2098-10-04"}, follow_redirects=True)
+r = client.get("/illustrations")
+check("story bank lists stories", b"The two wolves" in r.data)
+# the story detail shows where it was told
+r = client.get("/illustrations")
+mid = _re2.search(rb'/illustrations/(\d+)', r.data)
+if mid:
+    r = client.get("/illustrations/%s" % mid.group(1).decode())
+    check("story detail loads with 'where told'",
+          r.status_code == 200 and b"Where it has been told" in r.data)
+
+# --- Weddings and baptisms (lighter occasional records) -----------------
+r = client.post("/homily/new", data={
+    "type": "wedding", "title": "Wedding of A & B", "status": "preached",
+    "people": "Anna & Ben", "event_date": "2098-06-20",
+    "family": "The Smith and Jones families", "body": "On love.",
+}, follow_redirects=True)
+check("wedding saved with its details",
+      r.status_code == 200 and b"Anna &amp; Ben" in r.data)
+
+r = client.get("/celebrations")
+check("wedding listed in celebrations", b"Anna &amp; Ben" in r.data)
+check("baptism button present", b"New baptism" in r.data)
+
+# weddings are NOT in the funeral section
+r = client.get("/funerals")
+check("wedding not in funerals", b"Anna &amp; Ben" not in r.data)
+
+# The lectionary computes a known date correctly
+import lectionary  # noqa: E402
+import datetime as _d  # noqa: E402
+check("lectionary: Easter 2027 is 28 March",
+      lectionary.computus(2027) == _d.date(2027, 3, 28))
+ck = lectionary.classify(_d.date(2026, 11, 22))
+check("lectionary: Christ the King 2026", ck and ck["ot_number"] == 34)
+
+os.unlink(tmp_db.name)
+
+if failures:
+    print("\n%d check(s) failed." % len(failures))
+    sys.exit(1)
+print("\nOK - all checks passed (library, funerals, import, planner).")
