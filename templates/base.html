@@ -114,6 +114,46 @@
     window.addEventListener("offline", function () { set(false); });
     window.addEventListener("focus", check);
   })();
+
+  // --- Downloads that work inside the iPad/phone app ------------------
+  // A link marked data-download is fetched and saved as a file, without
+  // leaving the app window (so there's no blank tab and no "stuck" screen).
+  (function () {
+    function filenameFrom(resp, fallback) {
+      var cd = resp.headers.get("Content-Disposition") || "";
+      var m = /filename\*?=(?:UTF-8''|")?([^";]+)/i.exec(cd);
+      return m ? decodeURIComponent(m[1].replace(/"+$/, "")) : fallback;
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest ? e.target.closest("a[data-download]") : null;
+      if (!a) return;
+      e.preventDefault();
+      if (a.dataset.busy) return;
+      a.dataset.busy = "1";
+      var original = a.textContent;
+      a.textContent = "Preparing…";
+      a.style.opacity = "0.6";
+      fetch(a.href, { credentials: "same-origin" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("export failed");
+          var name = filenameFrom(r, a.getAttribute("data-filename") || "download");
+          return r.blob().then(function (b) { return { blob: b, name: name }; });
+        })
+        .then(function (o) {
+          var url = URL.createObjectURL(o.blob);
+          var t = document.createElement("a");
+          t.href = url; t.download = o.name;
+          document.body.appendChild(t); t.click(); t.remove();
+          setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+        })
+        .catch(function () {
+          alert("Sorry — that file could not be prepared. Please try again.");
+        })
+        .finally(function () {
+          a.textContent = original; a.style.opacity = ""; delete a.dataset.busy;
+        });
+    });
+  })();
   </script>
 </body>
 </html>
