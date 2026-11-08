@@ -47,12 +47,16 @@ its readings and text — so even a large export comes out complete.</p>
 
 <div class="export-buttons">
   {% if count %}
-    <a class="btn" href="{{ word_url }}">Export to Word</a>
-    <a class="btn" href="{{ pdf_url }}">Export to PDF</a>
+    <a class="btn" href="{{ word_url }}" target="_blank" rel="noopener">Export to Word</a>
+    <a class="btn" href="{{ pdf_url }}" target="_blank" rel="noopener">Export to PDF</a>
   {% else %}
     <p class="empty">Nothing matches these filters.</p>
   {% endif %}
 </div>
+
+<p class="muted-note" style="margin-top:0.6rem;">The export opens in your browser,
+where you can save, print, or share it. On iPad/iPhone, use the <strong>Share</strong>
+button there; close that tab to come back to the app.</p>
 
 <p class="muted-note" style="margin-top:1rem;">Tip: pick a <em>Season</em> and a
 <em>Year</em> to export, say, all of Lent in Year B; or type a Sunday in the

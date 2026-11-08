@@ -14,9 +14,9 @@ lost. (This is separate from the app's code, which is kept on GitHub.)</p>
 </div>
 
 <div class="backup-actions">
-  <a class="btn" href="{{ url_for('backup_download') }}">Download a backup</a>
-  <span class="muted-note">Save it to an external drive, or an iCloud/Dropbox
-    folder, for a copy that is safe even if something happens to this mac.</span>
+  <a class="btn" href="{{ url_for('backup_download') }}" target="_blank" rel="noopener">Download a backup</a>
+  <span class="muted-note">Opens in your browser — then save it to Files,
+    iCloud/Dropbox, or an external drive, for a copy that is safe off this device.</span>
 </div>
 
 <form method="post" action="{{ url_for('backup_save') }}" class="backup-save">
