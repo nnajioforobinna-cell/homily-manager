@@ -27,7 +27,7 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "Homily Manager Desktop ${{ github.ref_name }}"
-          releaseBody: "Download the installer for your computer — the .dmg for Mac, the -setup.exe for Windows. The app is unsigned, so the first time: on Mac right-click the app and choose Open; on Windows click 'More info' then 'Run anyway'."
+          releaseBody: "Download the installer for your computer: the .dmg for Mac, the -setup.exe for Windows. The app is unsigned, so there's a one-time step. Mac: drag the app to Applications, then in Terminal run  xattr -cr \"/Applications/Homily Manager.app\"  and open it. Windows: run the setup; if SmartScreen warns, click 'More info' then 'Run anyway'."
           releaseDraft: false
           prerelease: false
           args: "--bundles nsis"
@@ -53,6 +53,12 @@ jobs:
             echo "::error::macOS build failed: $(tail -c 1400 /tmp/build.txt | tr '\n\r' '  ')"
             exit "$code"
           fi
+
+      - name: Ad-hoc sign the app
+        run: |
+          APP=$(find src-tauri/target/release/bundle/macos -maxdepth 1 -name "*.app" | head -1)
+          codesign --force --deep --sign - "$APP"
+          codesign --verify --deep --verbose=2 "$APP" || true
 
       - name: Package the .dmg with hdiutil
         run: |
