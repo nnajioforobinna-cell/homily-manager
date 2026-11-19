@@ -111,7 +111,8 @@ def draw():
     d.rectangle([s((cx - 9, cy - 56)), s((cx + 9, cy + 44))], fill=GOLD)
     d.rectangle([s((cx - 40, cy - 22)), s((cx + 40, cy - 4))], fill=GOLD)
 
-    return img.resize((N, N), Image.LANCZOS)
+    # RGBA (with an opaque alpha channel) — Tauri requires RGBA icons.
+    return img.resize((N, N), Image.LANCZOS).convert("RGBA")
 
 
 def main():
