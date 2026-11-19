@@ -1,8 +1,8 @@
 name: Build desktop installers
 
-# Runs when you push a version tag like v1.0.0, or on demand from the
-# Actions tab. It builds the Mac .dmg and the Windows .exe in the cloud and
-# attaches them to a GitHub Release.
+# On a version tag (e.g. v1.0.3) builds the Windows .exe and the Mac .dmg and
+# attaches them to a GitHub Release. The Mac side builds the .app and packages
+# the .dmg with hdiutil (the built-in dmg bundler is unreliable on CI runners).
 on:
   push:
     tags: ["v*"]
@@ -12,35 +12,62 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: macos-latest
-            args: ""
-          - platform: windows-latest
-            args: ""
-    runs-on: ${{ matrix.platform }}
+  windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache cargo
-        uses: swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
         with:
           workspaces: "./src-tauri -> target"
-
-      - name: Build and release
+      - name: Build and release (Windows .exe)
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_type == 'tag' && github.ref_name || 'desktop-latest' }}
-          releaseName: "Homily Manager Desktop ${{ github.ref_type == 'tag' && github.ref_name || '' }}"
-          releaseBody: "Download the installer for your computer: the .dmg for Mac, the .exe (setup) for Windows. The app is unsigned, so the first time: on Mac right-click the app and choose Open; on Windows click 'More info' then 'Run anyway'."
+          tagName: ${{ github.ref_name }}
+          releaseName: "Homily Manager Desktop ${{ github.ref_name }}"
+          releaseBody: "Download the installer for your computer — the .dmg for Mac, the -setup.exe for Windows. The app is unsigned, so the first time: on Mac right-click the app and choose Open; on Windows click 'More info' then 'Run anyway'."
           releaseDraft: false
           prerelease: false
-          args: ${{ matrix.args }}
+          args: "--bundles nsis"
+
+  macos:
+    needs: windows
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+      - name: Install Tauri CLI
+        run: npm install -g @tauri-apps/cli@latest
+
+      - name: Build the .app (surface any error)
+        run: |
+          set +e
+          tauri build --bundles app 2>&1 | tee /tmp/build.txt
+          code=${PIPESTATUS[0]}
+          if [ "$code" -ne 0 ]; then
+            echo "::error::macOS build failed: $(tail -c 1400 /tmp/build.txt | tr '\n\r' '  ')"
+            exit "$code"
+          fi
+
+      - name: Package the .dmg with hdiutil
+        run: |
+          set -e
+          APP=$(find src-tauri/target/release/bundle/macos -maxdepth 1 -name "*.app" | head -1)
+          echo "App bundle: $APP"
+          mkdir -p out staging
+          cp -R "$APP" staging/
+          ln -s /Applications staging/Applications
+          hdiutil create -volname "Homily Manager" -srcfolder staging -ov -format UDZO \
+            "out/Homily-Manager_macos_aarch64.dmg"
+          ls -la out
+
+      - name: Upload the .dmg to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: out/*.dmg
