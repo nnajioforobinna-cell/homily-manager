@@ -1,0 +1,48 @@
+name: Build desktop installers
+
+# Runs when you push a version tag like v1.0.0, or on demand from the
+# Actions tab. It builds the Mac .dmg and the Windows .exe in the cloud and
+# attaches them to a GitHub Release.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            args: "--target universal-apple-darwin"
+          - platform: windows-latest
+            args: ""
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Cache cargo
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: Build and release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || 'desktop-latest' }}
+          releaseName: "Homily Manager Desktop ${{ github.ref_type == 'tag' && github.ref_name || '' }}"
+          releaseBody: "Download the installer for your computer: the .dmg for Mac, the .exe (setup) for Windows. The app is unsigned, so the first time: on Mac right-click the app and choose Open; on Windows click 'More info' then 'Run anyway'."
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.args }}

@@ -5,3 +5,9 @@ __pycache__/
 database/homilies.db
 backups/
 .DS_Store
+
+# Desktop (Tauri) build output
+src-tauri/target/
+src-tauri/gen/
+*.dmg
+*.app

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Homily Manager",
+  "version": "1.0.0",
+  "identifier": "com.homilymanager.app",
+  "build": {
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Homily Manager",
+        "width": 1200,
+        "height": 820,
+        "minWidth": 380,
+        "minHeight": 600,
+        "url": "https://znnajiofor.pythonanywhere.com/"
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "copyright": "Homily Manager",
+    "category": "Productivity",
+    "shortDescription": "Your homily library, planner, and pastoral records.",
+    "longDescription": "A private desktop window onto your Homily Manager web app."
+  }
+}
